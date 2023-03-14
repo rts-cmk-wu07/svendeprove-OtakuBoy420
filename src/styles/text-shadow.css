@@ -1,0 +1,5 @@
+@layer utilities {
+  .text-shadow {
+    text-shadow: #000 1px 0 3px;
+  }
+}
