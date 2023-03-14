@@ -20,6 +20,8 @@ Uddannelse: Webudvikler
   * [Frameworks](#frameworks)
   * [Libraries](#libraries)
   * [Valgfrie opgaver](#valgfrie-opgaver)
+  * [Design Ændringer](#design-ændringer)
+  * [Prioritering](#prioritering)
   * [Projekt perspektivering](#projekt-perspektivering)
 
 
