@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-const colors = require("tailwindcss/colors");
-const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors")
+const defaultTheme = require("tailwindcss/defaultTheme")
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   mode: "jit",
@@ -9,25 +9,33 @@ module.exports = {
       colors: {
         black: colors.black,
         white: colors.white,
-        background: "#121212",
-        primary: "#f1f1f1",
-        secondary: "#1E1E1E",
-        dimWhite: "rgba(255, 255, 255, 0.8)",
+        primary: "#5E2E53",
+        secondary: "#E1A1E9",
+        dimWhite: "#EAEAEA",
       },
       fontFamily: {
-        sans: ["Poppins", ...defaultTheme.fontFamily.sans],
+        sans: ["Ubuntu", ...defaultTheme.fontFamily.sans],
+        roboto: ["Roboto", "sans-serif"],
+        racing: ["Racing Sans One", "sans-serif"],
       },
-      screens: {
-        xs: "450px",
-        "2xl": "1440px",
+      fontSize: {
+        base: "18px",
+        lg: "24px",
+        xl: "36px",
+        "2xl": "48px",
       },
     },
   },
 
   plugins: [
     function ({ addVariant }) {
-      addVariant("child", "& > *");
-      addVariant("child-hover", "& > *:hover");
+      addVariant("child", "& > *")
+      addVariant("child-hover", "& > *:hover")
+    },
+    function ({ addBase }) {
+      addBase({
+        html: { fontSize: "18px" },
+      })
     },
   ],
-};
+}
