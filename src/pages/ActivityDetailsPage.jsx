@@ -8,7 +8,6 @@ export default function ActivityDetailsPage() {
   const { id } = useParams()
   const { data, error, loading } = useAxios(`${import.meta.env.VITE_API_URI}/activities/${id}`)
   const [imageLoaded, setImageLoaded] = useState(false)
-  console.log(data)
   const handleImageLoad = () => {
     setImageLoaded(true)
   }
@@ -23,9 +22,8 @@ export default function ActivityDetailsPage() {
             <img onLoad={handleImageLoad} alt={data?.name} className={imageLoaded ? "-z-1 h-full w-full object-cover" : "hidden"} src={data?.asset?.url} />
             <Button text="Tilmeld" className="absolute bottom-6 right-6" />
           </div>
-          <article className="flex flex-col p-6">
+          <article className="flex flex-col p-4">
             <h1 className="text-lg">{data?.name}</h1>
-
             <p>
               {data?.minAge}-{data?.maxAge} år
             </p>
