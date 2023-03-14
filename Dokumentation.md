@@ -1,4 +1,4 @@
-# Opgave Titel - Oliver
+# Landrup Dans - Oliver
 
 Elev: Oliver Zeymer
 
@@ -26,7 +26,7 @@ Uddannelse: Webudvikler
 
 ## Beskrivelse
 
-Velkommen til min eksamensopgave! I dette repository har jeg lavet min eksamensopgave med build toolen Vite og en masse andre ting, læs videre for at lære mere om hvordan man kører projektet, min tech-stack og hvordan jeg har overvejet mine valg :)
+Velkommen til min eksamensopgave, Landrup Dans! I dette repository har jeg lavet min eksamensopgave med build toolen Vite og en masse andre ting, læs videre for at lære mere om hvordan man kører projektet, min tech-stack og hvordan jeg har overvejet mine valg :)
 
 ## .env fil
 
@@ -38,7 +38,7 @@ VITE_API_URI=http://localhost:4000
 1. Klon projektet ned på din egen maskine.
 2. Tilføj .env filen som står ovenover i dokumentation til rooten af projektet.
 3. Kør kommandoen `npm install` og vent på at alt er blevet installeret korrekt.
-4. Få developer serveren op og køre i terminalen:
+4. Få development serveren op og køre i terminalen:
 
 ```bash
 npm run dev
@@ -175,7 +175,7 @@ Der er også andre meget populære CSS frameworks som for eksempel Bootstrap. Bo
 
 ### **Framer-motion**
 
-Det var nok ikke helt behøvet i et projekt på denne størrelse men jeg er blevet virkelig glad for framer-motion og vil gerne vise at jeg kan finde ud af det, jeg bruger det i stort set alle mine projekter.
+Det var nok ikke helt behøvet i et projekt på denne størrelse men jeg er blevet virkelig glad for framer-motion og vil gerne vise at jeg kan finde ud af det, jeg bruger det i stort set alle mine projekter. Jeg tænkte at siden welcome-page knappen skulle animeres ville jeg vise hvordan det skal gøres med framer motion :)
 
 I stedet for at lave CSS animationer som vi kender, gør Framer-motion det virkelig nemt ved at man bare kalde sit element for eksempel `<motion.div>`, og derefter give elementet en masse props der fortæller hvordan det skal animeres.
 
@@ -203,6 +203,15 @@ Jeg har valgt at bruge Lucide-React ikoner i stedet for React-Icons fordi Lucide
 - A
 - B
 - C
+
+
+## Desgin Ændringer
+
+1. 
+
+## Prioritering
+
+Jeg har lavet et GitHub Projects board med issues og labels der indikerer om jeg synes issuet er en MVP, Nice to have eller Need to have. Min tankegang igennem det hele var "hvad skal man minimum have på siden for at brugeren kan bruge den for dens funktionalitet?" Så det var derfor at jeg satte activities page, list og details alle som mit minimal viable product (MVP). Derefter som need to have tilføjede jeg issues som ville gøre oplevelsen for brugeren meget bedre og gøre det nemmere at navigere rundt. Nice to have var ting som jeg ikke behøvede at tilføje men som jeg synes er rigtig rare at have når man skal bruge en hjemmeside, og gør hele brugeroplevelsen mere lækker og flydende. 
 
 
 ## Projekt perspektivering
