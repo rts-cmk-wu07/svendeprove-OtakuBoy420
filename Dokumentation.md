@@ -6,25 +6,33 @@ Hold: WU07
 
 Uddannelse: Webudvikler
 
-
 ### List of contents
 
-
-- [Opgave Titel - Oliver](#opgave-titel---oliver)
-  * [Beskrivelse](#beskrivelse)
-  * [.env fil](#env-fil)
-  * [Getting Started](#getting-started)
+- [Landrup Dans - Oliver](#landrup-dans---oliver)
+    - [List of contents](#list-of-contents)
+  - [Beskrivelse](#beskrivelse)
+  - [.env fil](#env-fil)
+  - [Getting Started](#getting-started)
 - [Kode Eksempler](#kode-eksempler)
+    - [1. Skriftligt Eksempel](#1-skriftligt-eksempel)
+    - [Skriftligt forklaring:](#skriftligt-forklaring)
+    - [#2](#2)
 - [Build Tool](#build-tool)
+  - [**Vite**](#vite)
 - [Tech Stack](#tech-stack)
-  * [Frameworks](#frameworks)
-  * [Libraries](#libraries)
-  * [Valgfrie opgaver](#valgfrie-opgaver)
-  * [Design Ændringer](#design-ændringer)
-  * [Prioritering](#prioritering)
-  * [Projekt perspektivering](#projekt-perspektivering)
-
-
+  - [Frameworks](#frameworks)
+    - [**React.js**](#reactjs)
+    - [**TailwindCSS**](#tailwindcss)
+  - [Libraries](#libraries)
+    - [**Framer-motion**](#framer-motion)
+    - [**React-router**](#react-router)
+    - [**Axios**](#axios)
+    - [**React-Toastify**](#react-toastify)
+    - [**Lucide-react**](#lucide-react)
+  - [Valgfrie opgaver](#valgfrie-opgaver)
+  - [Design Ændringer](#design-ændringer)
+  - [Prioritering](#prioritering)
+  - [Projekt perspektivering](#projekt-perspektivering)
 
 ## Beskrivelse
 
@@ -33,8 +41,10 @@ Velkommen til min eksamensopgave, Landrup Dans! I dette repository har jeg lavet
 ## .env fil
 
 ```env
-VITE_API_URI=http://localhost:4000
+VITE_API_URI=http://localhost:4000/api/v1
+VITE_AUTH_URI=http://localhost:4000/auth/token
 ```
+
 ## Getting Started
 
 1. Klon projektet ned på din egen maskine.
@@ -51,82 +61,82 @@ npm run dev
 # Kode Eksempler
 
 ### 1. Skriftligt Eksempel
+
 ```javascript
-import axios from "axios";
-import { useEffect, useState } from "react";
+import axios from "axios"
+import { useEffect, useState } from "react"
 
 export default function useAxios(url, { needsAuth = false, token = "", needsId = false, id = null } = {}) {
   //sets default values for the options object if none are provided, so that the function can be called without any arguments and still work
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [data, setData] = useState({})
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
-    };
+    }
 
     if (needsAuth && !token) {
-      setLoading(false);
+      setLoading(false)
       setError({
         message: "You need to be logged in to access this page.",
         status: 401,
-      });
-      return;
+      })
+      return
     }
     if (needsId && !id) {
-      setLoading(false);
+      setLoading(false)
       setError({
         message: "You need to provide an ID to access this page.",
         status: 400,
-      });
-      return;
+      })
+      return
     }
 
-    setLoading(true);
-    setError(null);
+    setLoading(true)
+    setError(null)
 
     axios
       .get(needsId && id ? `${url}/${id}` : url, needsAuth ? { headers: headers } : null)
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
-          setData(response.data);
-          setLoading(false);
+          setData(response.data)
+          setLoading(false)
         } else {
-          setError(new Error(`Fetching error: ${response.status}`));
-          setLoading(false);
+          setError(new Error(`Fetching error: ${response.status}`))
+          setLoading(false)
         }
       })
       .catch((err) => {
-        setError(new Error(`Fetching error: ${err.message}`));
-        setLoading(false);
-      });
-  }, [url, needsAuth, token, id]);
+        setError(new Error(`Fetching error: ${err.message}`))
+        setLoading(false)
+      })
+  }, [url, needsAuth, token, id])
 
   const refreshData = () => {
-    setLoading(true);
-    setError(null);
+    setLoading(true)
+    setError(null)
 
     axios.get(url).then((response) => {
       if (response.status >= 200 && response.status < 300) {
-        setData(response.data);
-        setLoading(false);
+        setData(response.data)
+        setLoading(false)
       } else {
-        setError(new Error(`Fetching error: ${response.status}`));
-        setLoading(false);
+        setError(new Error(`Fetching error: ${response.status}`))
+        setLoading(false)
       }
-    });
-  };
+    })
+  }
 
-  return { data, error, loading, refreshData };
+  return { data, error, loading, refreshData }
 }
 ```
 
-### Skriftligt forklaring: 
+### Skriftligt forklaring:
 
-
-Det her er mit custom "useAxios" hook. Det bruges til at håndtere API-kald i min React-applikation. 
+Det her er mit custom "useAxios" hook. Det bruges til at håndtere API-kald i min React-applikation.
 
 Jeg valgte at lave et custom hook fordi der skal bruges API-kald mange gange i applikationen og det er en rigtig nem måde at kunne bruge den samme logik henover hele applikationen, som reducerer kode duplikering og gør det nemt at vedligeholde og lave nye ting i koden senere hen.
 
@@ -144,9 +154,7 @@ Så i konklusion kan mit useAxios hook lave GET requests på en rigtig nem måde
 
 ### #2
 
-
 Mundtligt forklaret
-
 
 # Build Tool
 
@@ -156,7 +164,7 @@ Vite tilbyder en hurtigere developer experience med sin lynhurtige build time og
 
 # Tech Stack
 
-## Frameworks 
+## Frameworks
 
 ### **React.js**
 
@@ -165,7 +173,6 @@ For mig var der to framework muligheder til dette projekt, enten at skrive i fra
 React stiller en masse forskellige ting til rådighed som for eksempel et stort community som gør det rigtig nemt at finde problemløsninger, stort udvalg af npm pakker, og det er rigtig nemt at genanvende forskellige komponenter så jeg slipper for at gentage kode jeg allerede har skrevet.
 
 Derudover kan man med React lave en single page applikation hvilket vil sige at man ikke er nødt til at genindlæse en helt ny html side hver gang man skifter side, hvilket gør din applikation hurtigere og får den til at føles mere smooth.
-
 
 ### **TailwindCSS**
 
@@ -199,22 +206,19 @@ Jeg har valgt at bruge React-Toastify fordi det er en simpel og effektiv måde a
 
 Jeg har valgt at bruge Lucide-React ikoner i stedet for React-Icons fordi Lucide-React ikoner tilbyder et mere moderne og minimalistisk design. Lucide-React ikoner er mere tilgængelige og lette at forstå, da de er baseret på symboler og ikoner, der er let genkendelige for brugerne. Fra hvad jeg har kunne undersøge er Lucide-React ikoner lettere og mere optimerede end React-Icons, hvilket betyder, at applikationen vil blive hurtigere og mere effektiv.
 
-
 ## Valgfrie opgaver
 
 - A
 - B
 - C
 
-
 ## Design Ændringer
 
-1. 
+1.
 
 ## Prioritering
 
-Jeg har lavet et GitHub Projects board med issues og labels der indikerer om jeg synes issuet er en MVP, Nice to have eller Need to have. Min tankegang igennem det hele var "hvad skal man minimum have på siden for at brugeren kan bruge den for dens funktionalitet?" Så det var derfor at jeg satte activities page, list og details alle som mit minimal viable product (MVP). Derefter som need to have tilføjede jeg issues som ville gøre oplevelsen for brugeren meget bedre og gøre det nemmere at navigere rundt. Nice to have var ting som jeg ikke behøvede at tilføje men som jeg synes er rigtig rare at have når man skal bruge en hjemmeside, og gør hele brugeroplevelsen mere lækker og flydende. 
-
+Jeg har lavet et GitHub Projects board med issues og labels der indikerer om jeg synes issuet er en MVP, Nice to have eller Need to have. Min tankegang igennem det hele var "hvad skal man minimum have på siden for at brugeren kan bruge den for dens funktionalitet?" Så det var derfor at jeg satte activities page, list og details alle som mit minimal viable product (MVP). Derefter som need to have tilføjede jeg issues som ville gøre oplevelsen for brugeren meget bedre og gøre det nemmere at navigere rundt. Nice to have var ting som jeg ikke behøvede at tilføje men som jeg synes er rigtig rare at have når man skal bruge en hjemmeside, og gør hele brugeroplevelsen mere lækker og flydende.
 
 ## Projekt perspektivering
 

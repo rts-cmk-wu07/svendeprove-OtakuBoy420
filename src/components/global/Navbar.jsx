@@ -1,7 +1,3 @@
 export default function Navbar() {
-  return (
-    <nav>
-      <p>Navbar</p>
-    </nav>
-  );
+  return <nav></nav>
 }
