@@ -21,6 +21,9 @@ module.exports = {
       boxShadow: {
         primary: "3px 4px 4px rgba(0, 0, 0, 0.25)",
       },
+      backgroundImage: {
+        welcome: "url('./assets/images/splash-image.jpg')",
+      },
       fontSize: {
         base: "18px",
         lg: "24px",
