@@ -207,7 +207,7 @@ Jeg har valgt at bruge Lucide-React ikoner i stedet for React-Icons fordi Lucide
 - C
 
 
-## Desgin Ændringer
+## Design Ændringer
 
 1. 
 
