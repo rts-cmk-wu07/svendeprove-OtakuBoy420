@@ -9,7 +9,7 @@ export default function ActivityCard({ activity }) {
   return (
     <article className="relative flex aspect-square w-full cursor-pointer flex-col rounded-[39px] rounded-br-none">
       <Link className="h-full w-full rounded-[39px] rounded-br-none" to={`/activity/${activity?.id}`}>
-        {!imageLoaded && <ImagePlaceholder size="full" />}
+        {!imageLoaded && <ImagePlaceholder card size="full" />}
         <img
           onLoad={handleImageLoad}
           className={imageLoaded ? "-z-1 absolute inset-0 h-full w-full rounded-[39px] rounded-br-none object-cover" : "hidden"}

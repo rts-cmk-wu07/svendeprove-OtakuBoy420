@@ -1,5 +1,5 @@
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 export default function CustomToastContainer() {
   return (
@@ -13,7 +13,7 @@ export default function CustomToastContainer() {
         fontWeight: "500",
         borderRadius: "15px",
         paddingInline: "1rem",
-        marginInline: "0.5rem",
+        margin: "0.5rem",
       }}
       hideProgressBar={false}
       newestOnTop
@@ -23,5 +23,5 @@ export default function CustomToastContainer() {
       draggable
       pauseOnHover
     />
-  );
+  )
 }
