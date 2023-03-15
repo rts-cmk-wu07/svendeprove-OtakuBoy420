@@ -15,7 +15,6 @@ Uddannelse: Webudvikler
   - [Getting Started](#getting-started)
 - [Kode Eksempler](#kode-eksempler)
     - [1. Skriftligt Eksempel](#1-skriftligt-eksempel)
-    - [Skriftligt forklaring:](#skriftligt-forklaring)
     - [#2](#2)
 - [Build Tool](#build-tool)
   - [**Vite**](#vite)
@@ -44,6 +43,10 @@ Velkommen til min eksamensopgave, Landrup Dans! I dette repository har jeg lavet
 VITE_API_URI=http://localhost:4000/api/v1
 VITE_AUTH_URI=http://localhost:4000/auth/token
 ```
+
+## Project Board
+
+Jeg har lavet min opgave med et project board, det kan ses [her](https://github.com/orgs/rts-cmk-wu07/projects/17/views/1). Mine issues er sat op med sin egen branch, og custom labels. I "Done" sektionen kan i se i rækkefølge hvilke ting jeg har valgt at prioritere og lave først (øverst er nyeste).
 
 ## Getting Started
 
@@ -134,7 +137,7 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
 }
 ```
 
-### Skriftligt forklaring:
+Skriftligt forklaring:
 
 Det her er mit custom "useAxios" hook. Det bruges til at håndtere API-kald i min React-applikation.
 
