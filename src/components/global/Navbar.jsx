@@ -26,7 +26,7 @@ export default function Navbar() {
         {navigationLinks.map((link, index) => (
           <li className="relative" key={index}>
             <AnimatePresence>
-              {location.pathname === link.path || (loginModal && link.name === "login") ? (
+              {location.pathname === link.path ? (
                 <motion.div
                   layoutId="bottom-nav-active"
                   transition={{
@@ -44,7 +44,7 @@ export default function Navbar() {
                 onClick={link.onClick}
                 className={
                   loginModal
-                    ? "my-3 flex cursor-pointer items-center justify-center rounded-full border-2 border-black p-1 text-white"
+                    ? "my-3 flex cursor-pointer items-center justify-center rounded-full border-2 border-primary p-1 text-primary"
                     : "my-3 flex cursor-pointer items-center justify-center rounded-full border-2 border-black p-1"
                 }>
                 <link.icon className="z-10" size={24} />
@@ -52,7 +52,7 @@ export default function Navbar() {
             ) : (
               <NavLink
                 className={({ isActive }) =>
-                  isActive && !loginModal
+                  isActive
                     ? "my-3 flex items-center justify-center rounded-full border-2 border-black p-1 text-white"
                     : "my-3 flex items-center justify-center rounded-full border-2 border-black p-1"
                 }
