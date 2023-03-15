@@ -27,7 +27,7 @@ export const staggerContainer = (staggerChildren, delayChildren) => ({
   },
 });
 
-export const textVariant = (delay) => ({
+export const fadeUp = (delay) => ({
   hidden: {
     y: 50,
     opacity: 0,

@@ -1,24 +1,33 @@
-import { Route, Routes } from "react-router"
-import Layout from "../../Layout"
-import { useLocation } from "react-router"
-import NotFoundPage from "../../pages/NotFoundPage"
-import { AnimatePresence } from "framer-motion"
-import CustomToastContainer from "../global/CustomNotification"
-import ActivitiesPage from "../../pages/ActivitiesPage"
-import ActivityDetailsPage from "../../pages/ActivityDetailsPage"
-import CalendarPage from "../../pages/CalendarPage"
-import SearchPage from "../../pages/SearchPage"
-import CalendarTeamPage from "../../pages/CalendarTeamPage"
-import WelcomePage from "../../pages/WelcomePage"
-import LoginModalContext from "../../contexts/LogInModalContext"
-import AuthContext from "../../contexts/AuthContext"
-import { useState } from "react"
-import LoginModal from "../global/LoginModal"
+import { Route, Routes } from "react-router";
+import Layout from "../../Layout";
+import { useLocation } from "react-router";
+import NotFoundPage from "../../pages/NotFoundPage";
+import { AnimatePresence } from "framer-motion";
+import CustomToastContainer from "../global/CustomNotification";
+import ActivitiesPage from "../../pages/ActivitiesPage";
+import ActivityDetailsPage from "../../pages/ActivityDetailsPage";
+import CalendarPage from "../../pages/CalendarPage";
+import SearchPage from "../../pages/SearchPage";
+import CalendarTeamPage from "../../pages/CalendarTeamPage";
+import WelcomePage from "../../pages/WelcomePage";
+import LoginModalContext from "../../contexts/LogInModalContext";
+import AuthContext from "../../contexts/AuthContext";
+import { useEffect, useState } from "react";
+import LoginModal from "../global/LoginModal";
+import { getCookie } from "react-use-cookie";
 export default function Router() {
-  const location = useLocation()
-  const [loginModal, setLoginModal] = useState(false)
+  const location = useLocation();
+  const [loginModal, setLoginModal] = useState(false);
 
-  const [auth, setAuth] = useState(false)
+  const [auth, setAuth] = useState(false);
+  const tokenCookie = getCookie("token");
+  useEffect(() => {
+    if (!auth && tokenCookie) {
+      setAuth(JSON.parse(tokenCookie));
+    } else if (!tokenCookie) {
+      setAuth(null);
+    }
+  }, []);
   return (
     <LoginModalContext.Provider value={{ loginModal, setLoginModal }}>
       <AuthContext.Provider value={{ auth, setAuth }}>
@@ -39,5 +48,5 @@ export default function Router() {
         </AnimatePresence>
       </AuthContext.Provider>
     </LoginModalContext.Provider>
-  )
+  );
 }

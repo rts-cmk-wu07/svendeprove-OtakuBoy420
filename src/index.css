@@ -2,7 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap");
 @import url("./styles/text-shadow.css");
-@import url("./styles/toasts.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
