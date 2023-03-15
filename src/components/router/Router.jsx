@@ -8,9 +8,9 @@ import ActivitiesPage from "../../pages/ActivitiesPage";
 import ActivityDetailsPage from "../../pages/ActivityDetailsPage";
 import CalendarPage from "../../pages/CalendarPage";
 import SearchPage from "../../pages/SearchPage";
-import CalendarTeamPage from "../../pages/CalendarTeamPage";
+import RosterPage from "../../pages/RosterPage";
 import WelcomePage from "../../pages/WelcomePage";
-import LoginModalContext from "../../contexts/LogInModalContext";
+import LoginModalContext from "../../contexts/LoginModalContext";
 import AuthContext from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import LoginModal from "../global/LoginModal";
@@ -41,7 +41,7 @@ export default function Router() {
               <Route path="/activities" element={<ActivitiesPage />} />
               <Route path="/activity/:id" element={<ActivityDetailsPage />} />
               <Route path="/calendar" element={<CalendarPage />} />
-              <Route path="/calendarteam" element={<CalendarTeamPage />} />
+              <Route path="/roster" element={<RosterPage />} />
               <Route path="/search" element={<SearchPage />} />
             </Route>
           </Routes>

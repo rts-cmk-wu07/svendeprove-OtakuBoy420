@@ -24,7 +24,7 @@ export default function useLogin() {
       if (response.ok) {
         const data = await response.json();
         if (remember) {
-          const milliseconds = data.validUntil - Date.now();
+          const milliseconds = data?.validUntil - Date.now();
           const validFor = milliseconds / (1000 * 60 * 60 * 24);
           setTokenCookie(JSON.stringify(data), {
             days: validFor,

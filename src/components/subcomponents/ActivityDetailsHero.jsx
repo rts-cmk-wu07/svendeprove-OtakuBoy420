@@ -38,7 +38,7 @@ export default function ActivityDetailsHero({ data, userData, auth }) {
             } else joinClass(data?.id, data?.weekday, setHasJoined, auth?.token, auth?.userId, setUserJoinedDays, userJoinedDays, userAge, data?.minAge, data?.maxAge);
           }}
           className="absolute bottom-6 right-6">
-          {hasJoined ? "Frameld" : "Tilmeld"}
+          {hasJoined ? "Forlad" : "Tilmeld"}
         </Button>
       )}
     </div>

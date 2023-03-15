@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Calendar, Home, Search, User } from "lucide-react";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import LoginModalContext from "../../contexts/LogInModalContext";
+import LoginModalContext from "../../contexts/LoginModalContext";
 import { useLocation } from "react-router-dom";
 
 export default function Navbar() {
