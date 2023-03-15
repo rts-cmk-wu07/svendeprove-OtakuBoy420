@@ -1,6 +1,6 @@
-import { Outlet } from "react-router"
-import Navbar from "./components/global/Navbar"
-import { motion } from "framer-motion"
+import { Outlet } from "react-router";
+import Navbar from "./components/global/Navbar";
+import { motion } from "framer-motion";
 export default function Layout() {
   return (
     <div className="flex h-screen w-screen flex-col overflow-y-auto overflow-x-hidden bg-primary text-white">
@@ -9,5 +9,5 @@ export default function Layout() {
         <Outlet />
       </motion.main>
     </div>
-  )
+  );
 }
