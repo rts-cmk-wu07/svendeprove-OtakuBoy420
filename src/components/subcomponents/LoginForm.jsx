@@ -4,7 +4,7 @@ import Loader from "../global/Loader";
 import { setCookie } from "react-use-cookie";
 import { useContext, useState } from "react";
 import AuthContext from "../../contexts/AuthContext";
-import LoginModalContext from "../../contexts/LogInModalContext";
+import LoginModalContext from "../../contexts/LoginModalContext";
 import useLogin from "../../hooks/useLogin";
 import { AnimatePresence, motion } from "framer-motion";
 export default function LoginForm() {
@@ -54,6 +54,7 @@ export default function LoginForm() {
   return (
     <form onSubmit={submitHandler} className="flex flex-col space-y-8 text-base leading-6 text-gray-700 sm:text-lg sm:leading-7">
       {!auth && (
+        // DESIGN ÆNDRING
         <>
           <div className="relative">
             <input

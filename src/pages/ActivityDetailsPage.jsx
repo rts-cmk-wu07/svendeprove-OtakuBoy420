@@ -22,10 +22,6 @@ export default function ActivityDetailsPage() {
     needsId: true,
     id: auth?.userId,
   });
-
-  if (!userLoading) {
-    console.log(userData);
-  }
   return (
     <AnimatePresence>
       <motion.section initial="hidden" animate="show">

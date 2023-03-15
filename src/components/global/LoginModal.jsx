@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useContext } from "react";
-import LoginModalContext from "../../contexts/LogInModalContext";
+import LoginModalContext from "../../contexts/LoginModalContext";
 
 import LoginForm from "../subcomponents/LoginForm";
 import { X } from "lucide-react";
@@ -10,7 +10,6 @@ export default function LoginModal() {
   const { loginModal, setLoginModal } = useContext(LoginModalContext);
 
   const { auth } = useContext(AuthContext);
-
   return (
     <AnimatePresence>
       {loginModal && (
