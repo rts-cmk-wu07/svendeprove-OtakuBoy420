@@ -73,13 +73,16 @@ npm run dev
 
 ```javascript
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import AuthContext from "../contexts/AuthContext";
+import checkTokenValidity from "../functions/checkTokenValidity";
 
 export default function useAxios(url, { needsAuth = false, token = "", needsId = false, id = null } = {}) {
+  //sets default values for the options object if none are provided, so that the function can be called without any arguments and still work
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { auth, setAuth } = useContext(AuthContext);
   useEffect(() => {
     const headers = {
       "Content-Type": "application/json",
@@ -105,6 +108,9 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
 
     setLoading(true);
     setError(null);
+    if (needsAuth) {
+      checkTokenValidity(auth, setAuth);
+    }
 
     axios
       .get(needsId && id ? `${url}/${id}` : url, needsAuth ? { headers: headers } : null)
@@ -113,12 +119,12 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
           setData(response.data);
           setLoading(false);
         } else {
-          setError(new Error(`Fetching error: ${response.status}`));
+          setError(new Error(`Data fejl: ${response.status}`));
           setLoading(false);
         }
       })
       .catch((err) => {
-        setError(new Error(`Fetching error: ${err.message}`));
+        setError(new Error(`Data fejl: ${err.message}`));
         setLoading(false);
       });
   }, [url, needsAuth, token, id]);
@@ -132,7 +138,7 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
         setData(response.data);
         setLoading(false);
       } else {
-        setError(new Error(`Fetching error: ${response.status}`));
+        setError(new Error(`Data fejl: ${response.status}`));
         setLoading(false);
       }
     });
@@ -140,12 +146,12 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
 
   return { data, error, loading, refreshData };
 }
+
+}
 ```
 
 <br />
 useAxios er et custom react hook som jeg har lavet for at gøre det enkelt og nemt at hente data fra API'et ved hjælp af Axios-biblioteket og en masse logik.
-
-Overvejelser:
 
 Jeg valgte at lave et custom hook til GET requests fordi der skal laves API-kald mange gange i applikationen og fordi et custom hook gør det rigtig nemt at genbruge den samme logik henover hele applikationen. Derudover skal man ikke tænke på ting som kode duplikering eller om det bliver et helvede at vedligeholde og lave nye ting i sin koden senere hen.
 
@@ -157,7 +163,7 @@ For at forklare state-håndteringen vil "data" indolde den data som er blevet he
 
 Hooket har også en "refreshData" funktion som kan kaldes for at få hooket til at foretage et nyt API-kald til det samme URL og opdatere data statet med den nye data.
 
-Hvis man kalder hooket med "needsAuth" eller "needsId" paremtrerne i et objekt vil hooket lave API kaldet ud for den logik der er skrevet som går ind og tjekker på det for at opnå ingen unødvendige fetch kald og andre fejl.
+Hvis man kalder hooket med "needsAuth" eller "needsId" paremtrerne i et objekt vil hooket lave API kaldet ud for den logik der er skrevet som går ind og tjekker på det for at opnå ingen unødvendige fetch kald og andre fejl. Derudover hvis man kalder hooket med "needsAuth" kører den min checkTokenValidity funktion som fungerer som en slags middleware som tjekker om tokenet er udløbet og hvis det er det, så fjerner den tokenet fra session og cookie, logger brugeren ud og viser en notifikation.
 
 Så i konklusion kan mit useAxios hook lave GET requests på en rigtig nem måde, og håndtere mine states for mig med kun en linje kode i mine komponenter.
 
@@ -166,65 +172,26 @@ Så i konklusion kan mit useAxios hook lave GET requests på en rigtig nem måde
 ## Mundtligt Eksempel - checkTokenValidity function
 
 ```javascript
-import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { getCookie, setCookie } from "react-use-cookie";
-
+import { setCookie } from "react-use-cookie";
 export default function checkTokenValidity(auth, setAuth) {
-  const updateAuth = (token) => {
-    //Hvis der ikke er noget token gemt i session eller cookie, så sæt auth til null (log brugeren ud) og hop ud af funktionen
-    if (!token) {
-      setAuth(null);
-      return;
-    }
+  const currentTime = Date.now();
+  const validUntil = auth?.validUntil;
+  const toastId = "tokenValidityToast";
 
-    const currentTime = Date.now();
-    const validUntil = token.validUntil;
-
-    //Hvis et token er gemt i session eller cookie, så gem alt dataen i AuthContext og log brugeren ind.
-    if (currentTime <= validUntil) {
-      setAuth(token);
-    } else {
-      //Hvis token er udløbet, så fjern det fra session og cookie, log brugeren ud og vis en fejl notifikation.
-      sessionStorage.removeItem("token");
-      setCookie("token", "", { days: 0 });
-      setAuth(null);
-      toast.error("Din session er udløbet. Log venligst ind igen.", {
-        position: "top-center",
-        autoClose: 5000,
-      });
-    }
-  };
-
-  useEffect(() => {
-    const tokenCookie = getCookie("token");
-    const storedToken = sessionStorage.getItem("token");
-    //Hvis brugeren ikke er logget ind så kør funktionen updateAuth med et token paremeter fra session eller cookie.
-    if (!auth) {
-      if (tokenCookie) {
-        updateAuth(JSON.parse(tokenCookie));
-      } else if (storedToken) {
-        updateAuth(JSON.parse(storedToken));
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    //Hvis brugeren ikke er logget ind så hop ud.
-    if (!auth) {
-      return;
-    }
-
-    const intervalId = setInterval(() => {
-      updateAuth(auth);
-    }, 1000 * 60 * 60); // Tjek hver time om token er udløbet.
-
-    //Stop interval når component unmountes.
-    return () => {
-      clearInterval(intervalId);
-    };
-    //Det er vigtigt at useEffect kører hver gang auth ændrer sig, så vi starter med at tjekke samme tid token blev oprettet.
-  }, [auth]);
+  //Hvis et token er gemt i session eller cookie, så gem alt dataen i AuthContext og log brugeren ind.
+  if (currentTime >= validUntil) {
+    //Hvis token er udløbet, så fjern det i storage/cookie, log brugeren ud og vis en fejl notifikation.
+    sessionStorage.removeItem("token");
+    setCookie("token", "", { days: 0 });
+    setAuth(null);
+    toast.error("Din session er udløbet. Log venligst ind igen.", {
+      position: "top-center",
+      autoClose: 5000,
+      toastId: toastId,
+    });
+  }
+  return;
 }
 ```
 

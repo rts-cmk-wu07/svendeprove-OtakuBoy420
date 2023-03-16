@@ -3,10 +3,9 @@ import ImagePlaceholder from "../global/ImagePlaceholder";
 import Button from "./Button";
 import joinClass from "../../functions/joinClass";
 import leaveClass from "../../functions/leaveClass";
-import { Link, useNavigate } from "react-router-dom";
-import { slideIn } from "../../utils/motion";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-export default function ActivityDetailsHero({ data, userData, auth }) {
+export default function ActivityDetailsHero({ data, userData, auth, setAuth }) {
   const navigate = useNavigate();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [hasJoined, setHasJoined] = useState(false);
@@ -40,8 +39,8 @@ export default function ActivityDetailsHero({ data, userData, auth }) {
             animated
             onClick={() => {
               if (hasJoined) {
-                leaveClass(data?.id, data?.weekday, setHasJoined, auth?.token, auth?.userId, setUserJoinedDays, userJoinedDays);
-              } else joinClass(data?.id, data?.weekday, setHasJoined, auth?.token, auth?.userId, setUserJoinedDays, userJoinedDays, userAge, data?.minAge, data?.maxAge);
+                leaveClass(data?.id, data?.weekday, setHasJoined, setUserJoinedDays, userJoinedDays, auth, setAuth);
+              } else joinClass(data?.id, data?.weekday, setHasJoined, setUserJoinedDays, userJoinedDays, userAge, data?.minAge, data?.maxAge, auth, setAuth);
             }}
             className="absolute bottom-6 right-6">
             {hasJoined ? "Forlad" : "Tilmeld"}

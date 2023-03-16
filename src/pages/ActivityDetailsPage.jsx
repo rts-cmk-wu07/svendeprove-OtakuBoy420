@@ -10,7 +10,7 @@ import { useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 export default function ActivityDetailsPage() {
   const { id } = useParams();
-  const { auth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
   const { data, error, loading } = useAxios(`${import.meta.env.VITE_API_URI}/activities/${id}`);
   const {
     data: userData,
@@ -31,7 +31,7 @@ export default function ActivityDetailsPage() {
           </article>
         ) : (
           <>
-            <ActivityDetailsHero data={data} userData={userData} auth={auth} />
+            <ActivityDetailsHero data={data} userData={userData} auth={auth} setAuth={setAuth} />
             <ActivityDetailsContent data={data} />
           </>
         )}
