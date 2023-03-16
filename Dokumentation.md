@@ -9,33 +9,39 @@ Uddannelse: Webudvikler
 ### List of contents
 
 - [Landrup Dans - Oliver](#landrup-dans---oliver)
-    - [List of contents](#list-of-contents)
-  - [Beskrivelse](#beskrivelse)
-  - [.env fil](#env-fil)
-  - [Getting Started](#getting-started)
+  - [List of contents](#list-of-contents)
+  * [Beskrivelse](#beskrivelse)
+  * [.env fil](#env-fil)
+  * [Project Board](#project-board)
+  * [Getting Started](#getting-started)
 - [Kode Eksempler](#kode-eksempler)
-    - [1. Skriftligt Eksempel](#1-skriftligt-eksempel)
-    - [#2](#2)
-- [Build Tool](#build-tool)
-  - [**Vite**](#vite)
-- [Tech Stack](#tech-stack)
-  - [Frameworks](#frameworks)
-    - [**React.js**](#reactjs)
-    - [**TailwindCSS**](#tailwindcss)
-  - [Libraries](#libraries)
-    - [**Framer-motion**](#framer-motion)
-    - [**React-router**](#react-router)
-    - [**Axios**](#axios)
-    - [**React-Toastify**](#react-toastify)
-    - [**Lucide-react**](#lucide-react)
-  - [Valgfrie opgaver](#valgfrie-opgaver)
-  - [Design Ændringer](#design-ændringer)
+  - [Skriftligt Eksempel - useAxios hook](#skriftligt-eksempel---useaxios-hook)
+  - [Mundtligt Eksempel - checkTokenValidity function](#mundtligt-eksempel---checktokenvalidity-function)
+- [Valgfrie opgaver](#valgfrie-opgaver)
+  - [A - Automatiseret deployment](#--a---automatiseret-deployment--)
+  - [C - Cookies](#--c---cookies--)
+- [Design Ændringer](#design--ndringer)
+  - [Navigations menu](#--navigations-menu--)
+- [Projekt tilgang](#projekt-tilgang)
   - [Prioritering](#prioritering)
-  - [Projekt perspektivering](#projekt-perspektivering)
+  - [Perspektivering](#perspektivering)
+- [Tech Stack](#tech-stack)
+  - [Build Tool](#build-tool)
+    - [Vite](#--vite--)
+  - [Frameworks](#frameworks)
+    - [React.js](#--reactjs--)
+    - [TailwindCSS](#--tailwindcss--)
+  - [Libraries](#--libraries--)
+    - [Framer-motion](#--framer-motion--)
+    - [React-router](#--react-router--)
+    - [Axios](#--axios--)
+    - [React-Toastify](#--react-toastify--)
+    - [Lucide-react](#--lucide-react--)
+    - [Yup](#--yup--)
 
 ## Beskrivelse
 
-Velkommen til min eksamensopgave, Landrup Dans! I dette repository har jeg lavet min eksamensopgave med build toolen Vite og en masse andre ting, læs videre for at lære mere om hvordan man kører projektet, min tech-stack og hvordan jeg har overvejet mine valg :)
+Velkommen til min eksamensopgave, Landrup Dans! I dette repository har jeg lavet min eksamensopgave som bruger [Landrup Dans API'et](https://github.com/OtakuBoy420/landrup-dans-api), læs videre for at lære mere om hvordan man kører projektet, min tech-stack og hvordan jeg har overvejet mine valg :)
 
 ## .env fil
 
@@ -63,109 +69,200 @@ npm run dev
 
 # Kode Eksempler
 
-### 1. Skriftligt Eksempel
+## Skriftligt Eksempel - useAxios hook
 
 ```javascript
-import axios from "axios"
-import { useEffect, useState } from "react"
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function useAxios(url, { needsAuth = false, token = "", needsId = false, id = null } = {}) {
-  //sets default values for the options object if none are provided, so that the function can be called without any arguments and still work
-  const [data, setData] = useState({})
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
-    }
+    };
 
     if (needsAuth && !token) {
-      setLoading(false)
+      setLoading(false);
       setError({
         message: "You need to be logged in to access this page.",
         status: 401,
-      })
-      return
+      });
+      return;
     }
     if (needsId && !id) {
-      setLoading(false)
+      setLoading(false);
       setError({
         message: "You need to provide an ID to access this page.",
         status: 400,
-      })
-      return
+      });
+      return;
     }
 
-    setLoading(true)
-    setError(null)
+    setLoading(true);
+    setError(null);
 
     axios
       .get(needsId && id ? `${url}/${id}` : url, needsAuth ? { headers: headers } : null)
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
-          setData(response.data)
-          setLoading(false)
+          setData(response.data);
+          setLoading(false);
         } else {
-          setError(new Error(`Fetching error: ${response.status}`))
-          setLoading(false)
+          setError(new Error(`Fetching error: ${response.status}`));
+          setLoading(false);
         }
       })
       .catch((err) => {
-        setError(new Error(`Fetching error: ${err.message}`))
-        setLoading(false)
-      })
-  }, [url, needsAuth, token, id])
+        setError(new Error(`Fetching error: ${err.message}`));
+        setLoading(false);
+      });
+  }, [url, needsAuth, token, id]);
 
   const refreshData = () => {
-    setLoading(true)
-    setError(null)
+    setLoading(true);
+    setError(null);
 
     axios.get(url).then((response) => {
       if (response.status >= 200 && response.status < 300) {
-        setData(response.data)
-        setLoading(false)
+        setData(response.data);
+        setLoading(false);
       } else {
-        setError(new Error(`Fetching error: ${response.status}`))
-        setLoading(false)
+        setError(new Error(`Fetching error: ${response.status}`));
+        setLoading(false);
       }
-    })
-  }
+    });
+  };
 
-  return { data, error, loading, refreshData }
+  return { data, error, loading, refreshData };
 }
 ```
 
-Skriftligt forklaring:
+<br />
+useAxios er et custom react hook som jeg har lavet for at gøre det enkelt og nemt at hente data fra API'et ved hjælp af Axios-biblioteket og en masse logik.
 
-Det her er mit custom "useAxios" hook. Det bruges til at håndtere API-kald i min React-applikation.
+Overvejelser:
 
-Jeg valgte at lave et custom hook fordi der skal bruges API-kald mange gange i applikationen og det er en rigtig nem måde at kunne bruge den samme logik henover hele applikationen, som reducerer kode duplikering og gør det nemt at vedligeholde og lave nye ting i koden senere hen.
+Jeg valgte at lave et custom hook til GET requests fordi der skal laves API-kald mange gange i applikationen og fordi et custom hook gør det rigtig nemt at genbruge den samme logik henover hele applikationen. Derudover skal man ikke tænke på ting som kode duplikering eller om det bliver et helvede at vedligeholde og lave nye ting i sin koden senere hen.
 
-Hooket tager et URL og et destructured optional objekt med nogle default values som kan indeholde krav om authorization og et ID som parametre.
+Hooket tager en URL string og et destructured optional objekt med nogle default values som kan indeholde krav om authorization og et ID.
 
-Hooket bruger Axios-biblioteket til at lave en GET request til det angivne URL med mulighed for authorization headers og returnerer derefter et objekt med tre states: data, error og loading.
+Hooket bruger som sagt Axios-biblioteket til at lave en GET request til det angivne URL med mulighed for authorization headers. Det returnerer derefter et objekt med tre states: data, error og loading.
 
-For at forklare state-håndteringen er "data" den data som er blevet hentet fra API'et, "error" vil indeholde de fejl der kan ske under API-kaldet, og "loading" vil være true eller false i forhold til om API-kaldet er i gang eller er færdigt.
+For at forklare state-håndteringen vil "data" indolde den data som er blevet hentet fra API'et, "error" vil indeholde de fejl der kan ske under API-kaldet, og "loading" vil være true eller false i forhold til om API-kaldet er i gang eller er færdigt.
 
-Hooket har også en "refreshData" funktion som kan kaldes for at få hooket til at foretage et nyt API-kald til det samme URL og opdatere mine states med den nye data.
+Hooket har også en "refreshData" funktion som kan kaldes for at få hooket til at foretage et nyt API-kald til det samme URL og opdatere data statet med den nye data.
 
-Hvis mit destructured optional object parameter indeholder "needsAuth" eller "needsId" krav vil hook'et først kontrollere om disse er opfyldt, før det foretager API-kaldet. Hvis kravene ikke er opfyldt vil hook'et sætte "loading" til false og "error" til en fejlbesked der beskriver hvad der gik galt, hvilket giver en rigtig god developer experience.
+Hvis man kalder hooket med "needsAuth" eller "needsId" paremtrerne i et objekt vil hooket lave API kaldet ud for den logik der er skrevet som går ind og tjekker på det for at opnå ingen unødvendige fetch kald og andre fejl.
 
 Så i konklusion kan mit useAxios hook lave GET requests på en rigtig nem måde, og håndtere mine states for mig med kun en linje kode i mine komponenter.
 
-### #2
+<br />
 
-Mundtligt forklaret
+## Mundtligt Eksempel - checkTokenValidity function
 
-# Build Tool
+```javascript
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { getCookie, setCookie } from "react-use-cookie";
 
-## **Vite**
+export default function checkTokenValidity(auth, setAuth) {
+  const updateAuth = (token) => {
+    //Hvis der ikke er noget token gemt i session eller cookie, så sæt auth til null (log brugeren ud) og hop ud af funktionen
+    if (!token) {
+      setAuth(null);
+      return;
+    }
 
-Vite tilbyder en hurtigere developer experience med sin lynhurtige build time og hurtige reaktionsevne. Vite bruger en moderne og optimeret development process ved hjælp af ES modules, hvilket resulterer i at det er meget hurtigere end CRA. Dette betyder, at development processsen er mere effektiv og smooth, da man som udvikler kan se ændringerne i real time mens man arbejder.
+    const currentTime = Date.now();
+    const validUntil = token.validUntil;
+
+    //Hvis et token er gemt i session eller cookie, så gem alt dataen i AuthContext og log brugeren ind.
+    if (currentTime <= validUntil) {
+      setAuth(token);
+    } else {
+      //Hvis token er udløbet, så fjern det fra session og cookie, log brugeren ud og vis en fejl notifikation.
+      sessionStorage.removeItem("token");
+      setCookie("token", "", { days: 0 });
+      setAuth(null);
+      toast.error("Din session er udløbet. Log venligst ind igen.", {
+        position: "top-center",
+        autoClose: 5000,
+      });
+    }
+  };
+
+  useEffect(() => {
+    const tokenCookie = getCookie("token");
+    const storedToken = sessionStorage.getItem("token");
+    //Hvis brugeren ikke er logget ind så kør funktionen updateAuth med et token paremeter fra session eller cookie.
+    if (!auth) {
+      if (tokenCookie) {
+        updateAuth(JSON.parse(tokenCookie));
+      } else if (storedToken) {
+        updateAuth(JSON.parse(storedToken));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    //Hvis brugeren ikke er logget ind så hop ud.
+    if (!auth) {
+      return;
+    }
+
+    const intervalId = setInterval(() => {
+      updateAuth(auth);
+    }, 1000 * 60 * 60); // Tjek hver time om token er udløbet.
+
+    //Stop interval når component unmountes.
+    return () => {
+      clearInterval(intervalId);
+    };
+    //Det er vigtigt at useEffect kører hver gang auth ændrer sig, så vi starter med at tjekke samme tid token blev oprettet.
+  }, [auth]);
+}
+```
+
+# Valgfrie opgaver
+
+### **A - Automatiseret deployment**
+
+Jeg har deployet min applikation til Vercel da jeg synes det er en rigtig god platform som jeg har deployed på mange gange før. Jeg har valgt at bruge Vercel frem for Netlify da jeg synes det er nemmere at sætte op og bruge.
+
+### **C - Cookies**
+
+Jeg har lavet en "husk mig" checkbox i login formularen som bruger React-use-cookie biblioteket til at sætte en cookie om man vil blive husket næste gang man går ind på siden.
+
+# Design Ændringer
+
+## **Navigations menu**
+
+Jeg har valgt at lave en ekstra knap i navigations menuen som viser en Login-formular modal når man trykker på den. Da jeg tænkte over hvordan man skulle logge ind og ud af applikationen tænkte jeg at det ville være mest brugervenligt at der var en knap til det som man altid kunne trykke på for at åbne formularen, og siden der var massere af plads i navigations menuen til en ekstra knap så valgte jeg at gøre det på den måde.
+
+# Projekt tilgang
+
+## Prioritering
+
+Jeg har lavet et [GitHub Projects board](https://github.com/orgs/rts-cmk-wu07/projects/17/views/1) med issues og labels der indikerer om jeg synes issuet er en MVP, Nice to have eller Need to have. Min tankegang igennem det hele var "hvad skal man minimum have på siden for at brugeren kan bruge den for dens funktionalitet?" Så det var derfor at jeg satte activities page, activity list, activity details, log in og useAxios hook alle som mit minimal viable product (MVP). Derefter som need to have tilføjede jeg issues som ville gøre oplevelsen for brugeren meget bedre og gøre det nemmere at navigere rundt. Nice to have var ting som jeg ikke behøvede at tilføje men som jeg synes er rigtig rare at have når man skal bruge en hjemmeside og som bare gør hele brugeroplevelsen mere lækker og flydende.
+
+## Perspektivering
+
+Hvis jeg skulle skalere dette projekt ville jeg starte med at lave en opret bruger formular da det er essentielt for siden og firmaet, at kunder kan oprette deres egen bruger og tilmelde sig danse aktiviteter. Dette var også en stor grund i mit valg om at bruge Yup, da det er meget genbrugeligt og man ville kunne bruge det samme skema til at lave en opret bruger formular.
+
+Hvis jeg skulle forbedre applikationen ville jeg ændre et par ting i backenden som billedestørrelse og token længde for bedre hastigheder da det er ekstremt vigtigt at folk ikke skal vente for længe på siden da folk tit går væk fra siden hvis den er for lang tid om at loade.
 
 # Tech Stack
+
+## Build Tool
+
+### **Vite**
+
+Vite tilbyder en hurtigere developer experience med sin lynhurtige build time og hurtige reaktionsevne. Vite bruger en moderne og optimeret development process ved hjælp af ES modules, hvilket resulterer i at det er meget hurtigere end CRA. Dette betyder, at development processsen er mere effektiv og smooth, da man som udvikler kan se ændringerne i real time mens man arbejder.
 
 ## Frameworks
 
@@ -183,7 +280,7 @@ Jeg har valgt at bruge Tailwind som mit CSS framework da jeg synes det er helt k
 
 Der er også andre meget populære CSS frameworks som for eksempel Bootstrap. Bootstrap har meninger om hvordan tingene skal se ud, og man har mindre frihed til at lave noget der ser unikt ud hvorimod med Tailwind kan man lave lige hvad man kunne have lyst til på sin egen måde, så det er derfor jeg har valgt Tailwind frem for Bootstrap.
 
-## Libraries
+## **Libraries**
 
 ### **Framer-motion**
 
@@ -203,28 +300,12 @@ Jeg har valgt at bruge axios til mine HTTP requests. Med axios frem for bare at 
 
 ### **React-Toastify**
 
-Jeg har valgt at bruge React-Toastify fordi det er en simpel og effektiv måde at implementere notifikationer og feedback til brugeren. Biblioteket er let at bruge og tilbyder virkelig meget reusability, så det nemt kan integreres i eksisterende projekter. Det er virkelig let at tilpasse udseendet og animationerne, så det passer til applikationens design og branding. React-Toastify et velkendt og veldokumenteret bibliotek, som har et aktiv og støttende community, som kan hjælpe med eventuelle spørgsmål eller problemer, der måtte opstå under implementeringen.
+Jeg har valgt at bruge React-Toastify fordi det er en simpel og effektiv måde at implementere notifikationer og feedback til brugeren. Biblioteket er let at bruge og tilbyder virkelig meget reusability, så det nemt kan integreres i eksisterende projekter. Det er virkelig let at tilpasse udseendet og animationerne, så det passer til applikationens design og branding. React-Toastify et velkendt og veldokumenteret bibliotek, som har et aktiv og støttende community.
 
 ### **Lucide-react**
 
-Jeg har valgt at bruge Lucide-React ikoner i stedet for React-Icons fordi Lucide-React ikoner tilbyder et mere moderne og minimalistisk design. Lucide-React ikoner er mere tilgængelige og lette at forstå, da de er baseret på symboler og ikoner, der er let genkendelige for brugerne. Fra hvad jeg har kunne undersøge er Lucide-React ikoner lettere og mere optimerede end React-Icons, hvilket betyder, at applikationen vil blive hurtigere og mere effektiv.
+Jeg har valgt at bruge Lucide-React ikoner i stedet for React-Icons fordi Lucide-React ikoner tilbyder et mere moderne og minimalistisk design. Lucide-React ikoner er mere tilgængelige og lette at forstå, da de er baseret på symboler og ikoner, der er let genkendelige for brugerne. Fra hvad jeg har kunne undersøge er Lucide-React ikoner lettere og mere optimerede end React-Icons, hvilket vil sige at applikationen vil køre hurtigere og mere effektivt.
 
-## Valgfrie opgaver
+### **Yup**
 
-- A
-- B
-- C
-
-## Design Ændringer
-
-1.
-
-## Prioritering
-
-Jeg har lavet et GitHub Projects board med issues og labels der indikerer om jeg synes issuet er en MVP, Nice to have eller Need to have. Min tankegang igennem det hele var "hvad skal man minimum have på siden for at brugeren kan bruge den for dens funktionalitet?" Så det var derfor at jeg satte activities page, list og details alle som mit minimal viable product (MVP). Derefter som need to have tilføjede jeg issues som ville gøre oplevelsen for brugeren meget bedre og gøre det nemmere at navigere rundt. Nice to have var ting som jeg ikke behøvede at tilføje men som jeg synes er rigtig rare at have når man skal bruge en hjemmeside, og gør hele brugeroplevelsen mere lækker og flydende.
-
-## Projekt perspektivering
-
-Hvis jeg skulle skalere dette projekt, ville jeg -
-
-Hvis jeg skulle forbedre applikationen ville jeg -
+Jeg har valgt at bruge Yup til mine form valideringer fordi det nemt at bruge, jeg har meget erfaring med det og det gør det meget nemmere at skalere applikationen i fremtiden. Det er meget customizable hvilket gør det til en rigtig god developer experience. Det er også nemt at bruge Yup sammen med React-hook-form, hvilket jeg har gjort i mit projekt.
