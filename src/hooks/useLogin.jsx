@@ -31,28 +31,30 @@ export default function useLogin() {
             sameSite: "strict",
           });
         } else {
-          setTokenCookie(JSON.stringify(data), {
-            sameSite: "strict",
-            expires: 0,
-          });
+          sessionStorage.setItem("token", JSON.stringify(data));
         }
 
         setAuth(data);
-        toast.success("You have successfully logged in!", {
+        toast.success("Du er nu logget ind", {
           position: "top-center",
           className: "toast-top-message",
         });
         setLoginModal(false);
       } else {
-        setErrorMessage(response.status === 401 ? "Invalid username or password" : "Something went wrong, please try again later");
-        toast.error(response.status === 401 ? "Invalid username or password" : "Something went wrong, please try again later", {
+        setErrorMessage(response.status === 401 ? "Ugyldigt brugernavn eller adganskode" : "Noget gik galt, prøv igen senere");
+        toast.error(response.status === 401 ? "Ugyldigt brugernavn eller adganskode" : "Noget gik galt, prøv igen senere", {
           autoClose: 3000,
           position: "top-center",
           className: "toast-top-message",
         });
       }
     } catch (error) {
-      setErrorMessage("Something went wrong, please try again later");
+      setErrorMessage("Noget gik galt, prøv igen senere");
+      toast.error("Noget gik galt, prøv igen senere", {
+        autoClose: 3000,
+        position: "top-center",
+        className: "toast-top-message",
+      });
     } finally {
       setIsLoading(false);
     }

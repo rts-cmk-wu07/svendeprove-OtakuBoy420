@@ -40,12 +40,12 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
           setData(response.data);
           setLoading(false);
         } else {
-          setError(new Error(`Fetching error: ${response.status}`));
+          setError(new Error(`Data fejl: ${response.status}`));
           setLoading(false);
         }
       })
       .catch((err) => {
-        setError(new Error(`Fetching error: ${err.message}`));
+        setError(new Error(`Data fejl: ${err.message}`));
         setLoading(false);
       });
   }, [url, needsAuth, token, id]);
@@ -59,7 +59,7 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
         setData(response.data);
         setLoading(false);
       } else {
-        setError(new Error(`Fetching error: ${response.status}`));
+        setError(new Error(`Data fejl: ${response.status}`));
         setLoading(false);
       }
     });
