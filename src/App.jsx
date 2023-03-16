@@ -14,14 +14,24 @@ import LoginModalContext from "./contexts/LoginModalContext";
 import AuthContext from "./contexts/AuthContext";
 import { useState } from "react";
 import LoginModal from "./components/global/LoginModal";
-import checkTokenValidity from "./functions/checkTokenValidity";
+import { useEffect } from "react";
+import { getCookie } from "react-use-cookie";
+
 export default function App() {
   const location = useLocation();
   const [loginModal, setLoginModal] = useState(false);
   const [auth, setAuth] = useState(false);
-
-  checkTokenValidity(auth, setAuth);
-
+  const tokenCookie = getCookie("token");
+  const storedToken = sessionStorage.getItem("token");
+  useEffect(() => {
+    if (!auth) {
+      if (tokenCookie) {
+        setAuth(JSON.parse(tokenCookie));
+      } else if (storedToken) {
+        setAuth(JSON.parse(storedToken));
+      }
+    }
+  }, []);
   return (
     <LoginModalContext.Provider value={{ loginModal, setLoginModal }}>
       <AuthContext.Provider value={{ auth, setAuth }}>

@@ -61,7 +61,7 @@ export default function LoginForm() {
               {...register("username")}
               type="text"
               placeholder="Brugernavn"
-              className="peer w-full rounded-lg bg-dimWhite py-2 pl-4 text-black placeholder-transparent shadow-lg focus:outline-none"
+              className="peer w-full rounded-xl bg-dimWhite py-2 pl-4 text-black placeholder-transparent shadow-lg focus:outline-none"
             />
             <label
               htmlFor="username"
@@ -77,7 +77,7 @@ export default function LoginForm() {
               {...register("password")}
               type="password"
               placeholder="password"
-              className="peer w-full rounded-lg bg-dimWhite py-2 pl-4 text-black placeholder-transparent shadow-lg focus:outline-none"
+              className="peer w-full rounded-xl bg-dimWhite py-2 pl-4 text-black placeholder-transparent shadow-lg focus:outline-none"
             />
             <label
               htmlFor="password"
