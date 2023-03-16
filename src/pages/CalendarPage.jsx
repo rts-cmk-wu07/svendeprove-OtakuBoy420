@@ -26,7 +26,7 @@ export default function CalendarPage() {
           <Loader size="lg" />
         ) : (
           <>
-            <h1 className="mb-8 text-xl">Calendar</h1>
+            <h1 className="mb-8 text-xl">Kalender</h1>
             {auth?.role === "default" && <CalendarUserList userActivities={userData?.activities} />}
             {auth?.role === "instructor" && <CalendarInstructorList instructorId={userData?.id} />}
             {!auth && (

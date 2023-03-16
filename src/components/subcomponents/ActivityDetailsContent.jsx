@@ -18,14 +18,12 @@ export default function ActivityDetailsContent({ data }) {
         {data?.weekday}, {data?.time}
       </motion.p>
 
-      <motion.p variants={fadeUp(0.7)} className="text-sm">
-        {data?.description}
-      </motion.p>
+      <motion.p variants={fadeUp(0.7)}>{data?.description}</motion.p>
       {!auth && (
         <motion.div variants={fadeUp(1)} className="mt-6 flex flex-col gap-2">
-          <motion.p className="text-sm">(Du skal være logget ind for at tilmelde dig)</motion.p>
+          <motion.p className="text-sm">Log ind nu for at tilmelde dig!</motion.p>
           <button className="rounded-full border border-black bg-secondary/25 py-1.5 px-2" onClick={() => setLoginModal(true)}>
-            Log ind her
+            Log ind
           </button>
         </motion.div>
       )}

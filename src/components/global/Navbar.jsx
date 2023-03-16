@@ -51,6 +51,7 @@ export default function Navbar() {
               </div>
             ) : (
               <NavLink
+                draggable={false}
                 className={({ isActive }) =>
                   isActive
                     ? "my-3 flex items-center justify-center rounded-full border-2 border-black p-1 text-white"

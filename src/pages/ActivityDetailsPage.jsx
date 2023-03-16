@@ -26,7 +26,9 @@ export default function ActivityDetailsPage() {
     <AnimatePresence>
       <motion.section initial="hidden" animate="show">
         {loading && userLoading ? (
-          <Loader size="lg" />
+          <article className="flex h-screen w-screen items-center justify-center">
+            <Loader size="lg" />
+          </article>
         ) : (
           <>
             <ActivityDetailsHero data={data} userData={userData} auth={auth} />
