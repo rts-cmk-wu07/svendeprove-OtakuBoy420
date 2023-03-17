@@ -82,7 +82,7 @@ export default function LoginForm() {
             <label
               htmlFor="password"
               className="absolute left-4 -top-6 z-10 cursor-text text-dimWhite transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#999] peer-focus:-top-6 peer-focus:text-white">
-              Username
+              Adgangskode
             </label>
           </div>
           <label className="mx-auto flex items-center justify-center text-white" htmlFor="remember">

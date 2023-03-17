@@ -6,7 +6,7 @@ export default function useLogin() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { setAuth } = useContext(AuthContext);
-  const [token, setTokenCookie] = useCookie("token", undefined);
+  const [setTokenCookie] = useCookie("token");
 
   const handleLogin = async (username, password, remember, setLoginModal) => {
     setIsLoading(true);
@@ -36,19 +36,17 @@ export default function useLogin() {
 
         setAuth(data);
         toast.success("Du er nu logget ind", {
-          position: "top-center",
-          className: "toast-top-message",
+          autoClose: 1500,
         });
         setLoginModal(false);
       } else {
         setErrorMessage(response.status === 401 ? "Ugyldigt brugernavn eller adganskode" : "Noget gik galt, prøv igen senere");
         toast.error(response.status === 401 ? "Ugyldigt brugernavn eller adganskode" : "Noget gik galt, prøv igen senere", {
           autoClose: 3000,
-          position: "top-center",
-          className: "toast-top-message",
         });
       }
     } catch (error) {
+      console.log(error);
       setErrorMessage("Noget gik galt, prøv igen senere");
       toast.error("Noget gik galt, prøv igen senere", {
         autoClose: 3000,

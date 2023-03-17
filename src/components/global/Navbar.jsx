@@ -9,7 +9,7 @@ export default function Navbar() {
   const { loginModal, setLoginModal } = useContext(LoginModalContext);
   const location = useLocation();
   const navigationLinks = [
-    { path: "/activities", icon: Home },
+    { path: "/", icon: Home },
     { path: "/search", icon: Search },
     { path: "/calendar", icon: Calendar },
     {
@@ -35,27 +35,27 @@ export default function Navbar() {
                     damping: 30,
                     scaleX: [1, 1.5, 1],
                   }}>
-                  <div className="absolute left-0 my-3 h-[37px] w-[37px] cursor-pointer rounded-full bg-primary" />
+                  <div className="absolute left-0 my-2.5 h-[41.5px] w-[41.5px] cursor-pointer rounded-full bg-primary" />
                 </motion.div>
               ) : null}
             </AnimatePresence>
             {link.name === "login" ? (
-              <div
+              <button
                 onClick={link.onClick}
                 className={
                   loginModal
-                    ? "my-3 flex cursor-pointer items-center justify-center rounded-full border-2 border-primary p-1 text-primary"
-                    : "my-3 flex cursor-pointer items-center justify-center rounded-full border-2 border-black p-1"
+                    ? "my-2.5 flex cursor-pointer items-center justify-center rounded-full border-2 border-primary p-1.5 text-primary"
+                    : "my-2.5 flex cursor-pointer items-center justify-center rounded-full border-2 border-black p-1.5"
                 }>
                 <link.icon className="z-10" size={24} />
-              </div>
+              </button>
             ) : (
               <NavLink
                 draggable={false}
                 className={({ isActive }) =>
                   isActive
-                    ? "my-3 flex items-center justify-center rounded-full border-2 border-black p-1 text-white"
-                    : "my-3 flex items-center justify-center rounded-full border-2 border-black p-1"
+                    ? "my-2.5 flex items-center justify-center rounded-full border-2 border-black p-1.5 text-white"
+                    : "my-2.5 flex items-center justify-center rounded-full border-2 border-black p-1.5"
                 }
                 to={link.path}
                 onClick={() => setLoginModal(false)}>

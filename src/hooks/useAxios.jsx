@@ -4,7 +4,6 @@ import AuthContext from "../contexts/AuthContext";
 import checkTokenValidity from "../functions/checkTokenValidity";
 
 export default function useAxios(url, { needsAuth = false, token = "", needsId = false, id = null } = {}) {
-  //sets default values for the options object if none are provided, so that the function can be called without any arguments and still work
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,7 +17,7 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
     if (needsAuth && !token) {
       setLoading(false);
       setError({
-        message: "You need to be logged in to access this page.",
+        message: "Du skal være logget ind for at se denne side.",
         status: 401,
       });
       return;
@@ -26,7 +25,7 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
     if (needsId && !id) {
       setLoading(false);
       setError({
-        message: "You need to provide an ID to access this page.",
+        message: "Der er sket en fejl. Prøv igen senere.",
         status: 400,
       });
       return;
