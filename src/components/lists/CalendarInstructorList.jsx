@@ -6,7 +6,7 @@ export default function CalendarInstructorList({ instructorId }) {
   const { data, loading, error } = useAxios(`${import.meta.env.VITE_API_URI}/activities`);
   const [instructorActivities, setInstructorActivities] = useState([]);
   useEffect(() => {
-    if (!loading) {
+    if (!loading && !error) {
       setInstructorActivities(data.filter((activity) => activity.instructorId === instructorId));
     }
   }, [data]);

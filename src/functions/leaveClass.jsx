@@ -17,7 +17,7 @@ export default function leaveClass(data, setHasJoined, setUserJoinedDays, userJo
 
   setUserJoinedDays(userJoinedDays.filter((day) => day !== data?.weekday));
 
-  toast.success(`Du er nu forladt ${data?.name}.Kig rundt for at finde en ny aktivitet!`, {
+  toast.success(`Du er nu forladt ${data?.name}. Kig rundt for at finde en ny aktivitet!`, {
     autoClose: 5000,
   });
 }

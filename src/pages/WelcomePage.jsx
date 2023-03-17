@@ -1,26 +1,34 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/subcomponents/Button";
 import { fadeIn } from "../utils/motion";
-
-import { useNavigate } from "react-router-dom";
-import loginModalContext from "../contexts/LoginModalContext";
-import { useContext } from "react";
-import AuthContext from "../contexts/AuthContext";
 export default function WelcomePage({ setHasSeenWelcome }) {
-  const { setLoginModal } = useContext(loginModalContext);
   const navigate = useNavigate();
-  const { auth } = useContext(AuthContext);
   function handleGetStarted() {
+    sessionStorage.setItem("hasSeenWelcome", true);
     setHasSeenWelcome(true);
-    if (!auth) {
-      setLoginModal(true);
-    } else {
-      navigate("/calendar");
-    }
+    navigate("/");
   }
   return (
     <AnimatePresence>
-      <motion.section initial="hidden" animate="show" className="relative flex h-screen w-screen flex-col items-center justify-center bg-welcome bg-cover bg-center">
+      <motion.section
+        initial="hidden"
+        animate="show"
+        variants={{
+          hidden: {
+            opacity: 0,
+            transition: {
+              duration: 0.5,
+            },
+          },
+          show: {
+            opacity: 1,
+            transition: {
+              duration: 1,
+            },
+          },
+        }}
+        className="relative flex h-screen w-screen flex-col items-center justify-center overflow-y-auto overflow-x-hidden bg-white bg-welcome bg-cover bg-center text-white">
         <article className="flex w-fit flex-col self-start rounded-t-2xl backdrop-blur-sm">
           {/* DESIGN ÆNDRING */}
           <h1 className="flex flex-col py-1 pl-6 pr-4">
