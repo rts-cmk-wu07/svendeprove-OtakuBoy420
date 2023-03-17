@@ -14,8 +14,8 @@ export default function ActivityCard({ activity, index }) {
         opacity: 1,
         y: 0,
         transition: {
-          duration: 0.25,
-          delay: index * 0.1,
+          duration: 0.5,
+          delay: index * 0.25,
           ease: "easeOut",
         },
       }}
@@ -23,7 +23,7 @@ export default function ActivityCard({ activity, index }) {
         opacity: 0,
         y: -50,
         transition: {
-          duration: 0.25,
+          duration: 1,
           ease: "easeOut",
         },
       }}

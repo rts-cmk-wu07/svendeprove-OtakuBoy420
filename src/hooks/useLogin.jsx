@@ -6,7 +6,7 @@ export default function useLogin() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { setAuth } = useContext(AuthContext);
-  const [setTokenCookie] = useCookie("token");
+  const [tokenCookie, setTokenCookie] = useCookie("token");
 
   const handleLogin = async (username, password, remember, setLoginModal) => {
     setIsLoading(true);

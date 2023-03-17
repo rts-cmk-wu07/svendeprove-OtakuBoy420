@@ -6,22 +6,25 @@ Hold: WU07
 
 Uddannelse: Webudvikler
 
-### List of contents
+## List of contents
 
 - [Landrup Dans - Oliver](#landrup-dans---oliver)
   - [List of contents](#list-of-contents)
-  * [Beskrivelse](#beskrivelse)
-  * [.env fil](#env-fil)
-  * [Project Board](#project-board)
-  * [Getting Started](#getting-started)
+  - [Beskrivelse](#beskrivelse)
+  - [.env fil](#env-fil)
+  - [Project Board](#project-board)
+  - [Getting Started](#getting-started)
 - [Kode Eksempler](#kode-eksempler)
   - [Skriftligt Eksempel - useAxios hook](#skriftligt-eksempel---useaxios-hook)
-  - [Mundtligt Eksempel - checkTokenValidity function](#mundtligt-eksempel---checktokenvalidity-function)
+  - [Mundtligt Eksempel - joinClass funktion](#mundtligt-eksempel---joinclass-funktion)
 - [Valgfrie opgaver](#valgfrie-opgaver)
   - [A - Automatiseret deployment](#--a---automatiseret-deployment--)
   - [C - Cookies](#--c---cookies--)
 - [Design Ændringer](#design--ndringer)
   - [Navigations menu](#--navigations-menu--)
+  - [Input felter](#--input-felter--)
+  - [Hold roster side](#--hold-roster-side--)
+  - [Kalender side](#--kalender-side--)
 - [Projekt tilgang](#projekt-tilgang)
   - [Prioritering](#prioritering)
   - [Perspektivering](#perspektivering)
@@ -172,39 +175,60 @@ Så i konklusion kan mit useAxios hook lave GET requests på en rigtig nem måde
 import axios from "axios";
 import { toast } from "react-toastify";
 import checkTokenValidity from "./checkTokenValidity";
-export default function joinClass(id, weekday, setHasJoined, setUserJoinedDays, userJoinedDays, userAge, minAge, maxAge, auth, setAuth) {
+
+export default function joinClass(data, setHasJoined, setUserJoinedDays, userJoinedDays, userAge, auth, setAuth) {
+  // Kører min checkTokenValidity funktion som fungerer som en slags middleware der tjekker om ens token er udløbet og hvis det er det, så bliver logger brugeren ud og viser en notifikation.
   checkTokenValidity(auth, setAuth);
+
+  // Hvis brugeren ikke er logget ind, vises en fejlmeddelelse og funktionen afbrydes
   if (!auth) {
-    toast.error("Du skal være logget ind for at kunne tilmelde dig", {
+    toast.error("Du skal være logget ind for at kunne tilmelde dig aktiviteter", {
       position: "top-center",
       autoClose: 5000,
     });
     return;
   }
 
-  if (userJoinedDays.includes(weekday)) {
-    toast.error(`Du er allerede tilmeldt en aktivitet på ${weekday ? weekday : "denne dag"}`, {
-      position: "top-center",
-      autoClose: 5000,
-    });
-    return;
-  }
-  if (userAge < minAge || userAge > maxAge) {
-    toast.error(`Du er ikke i aldersgruppen for denne aktivitet`, {
-      position: "top-center",
+  // Hvis brugeren allerede er tilmeldt en aktivitet på samme ugedag, vises en fejlmeddelelse og funktionen afbrydes
+  if (userJoinedDays.includes(data?.weekday)) {
+    toast.error(`Du er allerede tilmeldt en aktivitet på ${data?.weekday ? data?.weekday : "denne dag"}`, {
       autoClose: 5000,
     });
     return;
   }
 
+  // Hvis brugerens alder ikke er inden for aldersgrænsen for aktiviteten, vises en fejlmeddelelse og funktionen afbrydes
+  if (userAge < data?.minAge || userAge > data?.maxAge) {
+    toast.error(
+      `Du skal være mellem ${data?.minAge}-${data?.maxAge} år for at kunne tilmelde dig ${data?.name}
+    `,
+      {
+        autoClose: 7500,
+      }
+    );
+    return;
+  }
+
+  // Laver en POST request til API'et med brugerens token og id for at tilmelde brugeren til aktiviteten
+  axios.post(`${import.meta.env.VITE_API_URI}/users/${auth?.userId}/activities/${data?.id}`, {}, { headers: { Authorization: `Bearer ${auth?.token}`, "Content-Type": "application/json" } });
+
+  // Opdaterer userJoinedDays statet med den nye ugedag, så brugeren ikke kan tilmelde sig aktiviteten igen
+  setUserJoinedDays([...userJoinedDays, data?.weekday]);
+
+  // Opdaterer hasJoined statet til true, så brugeren ikke kan tilmelde sig aktiviteten igen
   setHasJoined(true);
-  axios.post(`${import.meta.env.VITE_API_URI}/users/${auth?.userId}/activities/${id}`, {}, { headers: { Authorization: `Bearer ${auth?.token}`, "Content-Type": "application/json" } });
-  setUserJoinedDays([...userJoinedDays, weekday]);
 
-  toast.success("Du er nu tilmeldt denne aktivitet", {
-    position: "top-center",
-  });
-  return;
+  // Viser en succesmeddelelse om tilmelding
+  toast.success(
+    <div>
+      Du er nu tilmeldt {data?.name}. <br />
+      Vær klar på {data?.weekday.charAt(0).toUpperCase()}
+      {data?.weekday.slice(1)} kl. {data?.time}!
+    </div>,
+    {
+      autoClose: 5000,
+    }
+  );
 }
 ```
 
@@ -223,6 +247,18 @@ Jeg har lavet en "husk mig" checkbox i login formularen som bruger React-use-coo
 ## **Navigations menu**
 
 Jeg har valgt at lave en ekstra knap i navigations menuen som viser en Login-formular modal når man trykker på den. Da jeg tænkte over hvordan man skulle logge ind og ud af applikationen tænkte jeg at det ville være mest brugervenligt at der var en knap til det som man altid kunne trykke på for at åbne formularen, og siden der var massere af plads i navigations menuen til en ekstra knap så valgte jeg at gøre det på den måde.
+
+## **Input felter**
+
+Jeg har valgt at lave input felterne afrundede for at de passer bedre ind i det generelle udtryk af siden siden næsten alt andet er afrundet og brugeren skal have det indtryk at der er en sammenhæng mellem alle elementerne på siden.
+
+## **Hold roster side**
+
+Jeg har lavet listen over de tilmeldte brugere nemmere at læse og overskue ved at sætte det op som en liste med punktopstilling og lidt margin mellem punkterne. Derudover hvis man er instruktør og går ind på en aktivitet man er instruktør for så er der en knap til at gå til hold roster siden for nem adgang.
+
+## **Kalender side**
+
+På kalender siden har jeg gjort titlen på ens aktiviter mindre så man kan se hele navnet på aktiviteten, jeg synes det gør det meget nemmere at få en forståelse af hvilke aktiviteter man er tilmeldt.
 
 # Projekt tilgang
 

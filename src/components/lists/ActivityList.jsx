@@ -14,15 +14,15 @@ export default function ActivityList({ search, searchable }) {
         {loading ? (
           <Loader size="lg" />
         ) : error ? (
-          <div className="flex items-center gap-1">
-            <AlertCircle className="text-red-500" />
-            <p className="text-base text-red-500">{error?.message ? error?.message : "Kunne ikke hente dataen, prøv igen senere."}</p>
-          </div>
+          <motion.div initial="hidden" animate="show" variants={fadeUp(0)} className="flex flex-col items-center gap-2 text-lg">
+            <AlertCircle size={38} />
+            <p>{error ? error.message : "Der skete en fejl. Prøv igen senere."}</p>
+          </motion.div>
         ) : searchable ? (
           search === "" ? (
             <></>
           ) : filteredActivities?.length === 0 ? (
-            <motion.div initial="hidden" animate="show" variants={fadeUp(0)} className="flex flex-col items-center gap-2 text-lg text-red-500">
+            <motion.div initial="hidden" animate="show" variants={fadeUp(0)} className="flex flex-col items-center gap-2 text-lg">
               <AlertCircle size={38} />
               <p>Der blev ikke fundet nogle aktiviteter. Prøv at søge efter noget andet.</p>
             </motion.div>

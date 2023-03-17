@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AuthContext from "../contexts/AuthContext";
 import Loader from "../components/global/Loader";
 import useAxios from "../hooks/useAxios";
@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import CalendarUserList from "../components/lists/CalendarUserList";
 import CalendarInstructorList from "../components/lists/CalendarInstructorList";
 import LoginModalContext from "../contexts/LoginModalContext";
+import { toast } from "react-toastify";
 export default function CalendarPage() {
   const { auth } = useContext(AuthContext);
   const { setLoginModal } = useContext(LoginModalContext);
@@ -19,6 +20,12 @@ export default function CalendarPage() {
     needsId: true,
     id: auth?.userId,
   });
+  useEffect(() => {
+    if (!auth) {
+      setLoginModal(true);
+      toast("Log venligst ind for at se kalenderen", { type: "info", toastId: "calendar-toast", autoClose: 3000 });
+    }
+  }, []);
   return (
     <AnimatePresence>
       <motion.section initial="hidden" animate="show" className="p-6">
