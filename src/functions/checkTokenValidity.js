@@ -5,9 +5,8 @@ export default function checkTokenValidity(auth, setAuth) {
   const validUntil = auth?.validUntil;
   const toastId = "tokenValidityToast";
 
-  //Hvis et token er gemt i session eller cookie, så gem alt dataen i AuthContext og log brugeren ind.
+  //Hvis token er udløbet, så fjern det i storage/cookie, log brugeren ud og vis en fejl notifikation.
   if (currentTime >= validUntil) {
-    //Hvis token er udløbet, så fjern det fra session og cookie, log brugeren ud og vis en fejl notifikation.
     sessionStorage.removeItem("token");
     setCookie("token", "", { days: 0 });
     setAuth(null);

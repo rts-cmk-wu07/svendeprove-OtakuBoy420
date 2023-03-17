@@ -16,10 +16,10 @@ import { useState } from "react";
 import LoginModal from "./components/global/LoginModal";
 import { useEffect } from "react";
 import { getCookie } from "react-use-cookie";
-
 export default function App() {
   const location = useLocation();
   const [loginModal, setLoginModal] = useState(false);
+  const [hasSeenWelcome, setHasSeenWelcome] = useState(false);
   const [auth, setAuth] = useState(false);
   const tokenCookie = getCookie("token");
   const storedToken = sessionStorage.getItem("token");
@@ -39,14 +39,13 @@ export default function App() {
         <LoginModal loginModal={loginModal} setLoginModal={setLoginModal} />
         <AnimatePresence mode="wait" initial={false}>
           <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<WelcomePage />} />
-              <Route path="*" element={<NotFoundPage />} />
-              <Route path="/activities" element={<ActivitiesPage />} />
+            <Route path="/" element={<Layout hasSeenWelcome={hasSeenWelcome} />}>
+              {!hasSeenWelcome ? <Route index element={<WelcomePage setHasSeenWelcome={setHasSeenWelcome} />} /> : <Route index element={<ActivitiesPage />} />}
               <Route path="/activity/:id" element={<ActivityDetailsPage />} />
               <Route path="/calendar" element={<CalendarPage />} />
               <Route path="/roster/:id" element={auth?.role === "instructor" ? <RosterPage /> : <h1 className="p-6 text-xl">Du har ikke adgang til denne side.</h1>} />
               <Route path="/search" element={<SearchPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
         </AnimatePresence>

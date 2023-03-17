@@ -8,11 +8,11 @@ export default function Button({ children, animated, onClick, className, type })
       variants={slideIn("right", "spring", 0.3, 1.5)}
       type={type}
       onClick={onClick}
-      className={"w-[249px] rounded-[10px] border-none bg-primary py-3 shadow-primary outline-none ring-0 " + className}>
+      className={"w-[249px] rounded-[10px] border-none bg-primary py-3 shadow-primary ring-0 " + className}>
       {children}
     </motion.button>
   ) : (
-    <button type={type} onClick={onClick} className={"w-[249px] rounded-[10px] border-none bg-primary py-3 shadow-primary outline-none ring-0 " + className}>
+    <button type={type} onClick={onClick} className={"w-[249px] rounded-[10px] border-none bg-primary py-3 shadow-primary ring-0 " + className}>
       {children}
     </button>
   );

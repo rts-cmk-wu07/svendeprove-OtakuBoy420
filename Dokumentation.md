@@ -56,7 +56,7 @@ Jeg har lavet min opgave med et project board, det kan ses [her](https://github.
 
 ## Getting Started
 
-1. Klon projektet ned på din egen maskine.
+1. Klon projektet ned på din maskine.
 2. Tilføj .env filen som står ovenover i dokumentation til rooten af projektet.
 3. Kør kommandoen `npm install` og vent på at alt er blevet installeret korrekt.
 4. Få development serveren op og køre i terminalen:
@@ -65,7 +65,8 @@ Jeg har lavet min opgave med et project board, det kan ses [her](https://github.
 npm run dev
 ```
 
-4. Til sidst hvis Vite ikke allerede har gjordt det for dig, åben http://localhost:5173 i browseren, og så er vi i gang! :)
+5. Vær sikker på at du har [Landrup Dans API'et](https://github.com/OtakuBoy420/landrup-dans-api) kørende på din maskine.
+6. Til sidst hvis Vite ikke allerede har gjordt det for dig, åben http://localhost:5173 i browseren, og så er vi i gang! :)
 
 # Kode Eksempler
 
@@ -78,7 +79,6 @@ import AuthContext from "../contexts/AuthContext";
 import checkTokenValidity from "../functions/checkTokenValidity";
 
 export default function useAxios(url, { needsAuth = false, token = "", needsId = false, id = null } = {}) {
-  //sets default values for the options object if none are provided, so that the function can be called without any arguments and still work
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -92,7 +92,7 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
     if (needsAuth && !token) {
       setLoading(false);
       setError({
-        message: "You need to be logged in to access this page.",
+        message: "Du skal være logget ind for at se denne side.",
         status: 401,
       });
       return;
@@ -100,7 +100,7 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
     if (needsId && !id) {
       setLoading(false);
       setError({
-        message: "You need to provide an ID to access this page.",
+        message: "Der er sket en fejl. Prøv igen senere.",
         status: 400,
       });
       return;
@@ -108,6 +108,7 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
 
     setLoading(true);
     setError(null);
+
     if (needsAuth) {
       checkTokenValidity(auth, setAuth);
     }
@@ -146,51 +147,63 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
 
   return { data, error, loading, refreshData };
 }
-
-}
 ```
 
 <br />
-useAxios er et custom react hook som jeg har lavet for at gøre det enkelt og nemt at hente data fra API'et ved hjælp af Axios-biblioteket og en masse logik.
+useAxios er et custom react hook som jeg har lavet for at gøre det enkelt og nemt at hente data fra API'et som gør brug af Axios-biblioteket.
 
-Jeg valgte at lave et custom hook til GET requests fordi der skal laves API-kald mange gange i applikationen og fordi et custom hook gør det rigtig nemt at genbruge den samme logik henover hele applikationen. Derudover skal man ikke tænke på ting som kode duplikering eller om det bliver et helvede at vedligeholde og lave nye ting i sin koden senere hen.
+Jeg valgte at lave et custom hook til GET requests fordi der skal laves API-kald mange gange i denne applikation og fordi et custom hook gør det ekstremt nemt at genbruge sin logik henover hele applikationen. Derudover skal man ikke tænke på ting som kode duplikering eller om det bliver besværligt at vedligeholde sin koden i fremtiden.
 
-Hooket tager en URL string og et destructured optional objekt med nogle default values som kan indeholde krav om authorization og et ID.
+Hooket tager en URL string og et destructured optional object med nogle default values som kan indeholde krav om authorization og et ID som parametre.
 
-Hooket bruger som sagt Axios-biblioteket til at lave en GET request til det angivne URL med mulighed for authorization headers. Det returnerer derefter et objekt med tre states: data, error og loading.
+Hookets funktionalitet er at lave en GET request til det angivne URL med mulighed for headers. Det returnerer derefter et objekt med tre states: data, error og loading.
 
-For at forklare state-håndteringen vil "data" indolde den data som er blevet hentet fra API'et, "error" vil indeholde de fejl der kan ske under API-kaldet, og "loading" vil være true eller false i forhold til om API-kaldet er i gang eller er færdigt.
+For at forklare state-håndteringen vil "data" indolde den data som er blevet hentet fra API'et, "error" vil indeholde de fejl der kan ske under API-kaldet, og "loading" vil være true eller false i forhold til om API-kaldet er i gang eller færdigt med at loade dataen.
 
-Hooket har også en "refreshData" funktion som kan kaldes for at få hooket til at foretage et nyt API-kald til det samme URL og opdatere data statet med den nye data.
-
-Hvis man kalder hooket med "needsAuth" eller "needsId" paremtrerne i et objekt vil hooket lave API kaldet ud for den logik der er skrevet som går ind og tjekker på det for at opnå ingen unødvendige fetch kald og andre fejl. Derudover hvis man kalder hooket med "needsAuth" kører den min checkTokenValidity funktion som fungerer som en slags middleware som tjekker om tokenet er udløbet og hvis det er det, så fjerner den tokenet fra session og cookie, logger brugeren ud og viser en notifikation.
+Hvis man kalder hooket med "needsAuth" eller "needsId" paremtrerne i et objekt vil hooket lave API kaldet ud for den logik der er skrevet som går ind og tjekker på det for at undgå unødvendige fetch kald og andre fejl. Derudover hvis man kalder hooket med "needsAuth" kører den min checkTokenValidity funktion som fungerer som en slags middleware der tjekker om ens token er udløbet og hvis det er det, så fjerner den tokenet fra session og cookie, logger brugeren ud og viser en notifikation.
 
 Så i konklusion kan mit useAxios hook lave GET requests på en rigtig nem måde, og håndtere mine states for mig med kun en linje kode i mine komponenter.
 
 <br />
 
-## Mundtligt Eksempel - checkTokenValidity function
+## Mundtligt Eksempel - joinClass funktion
 
 ```javascript
+import axios from "axios";
 import { toast } from "react-toastify";
-import { setCookie } from "react-use-cookie";
-export default function checkTokenValidity(auth, setAuth) {
-  const currentTime = Date.now();
-  const validUntil = auth?.validUntil;
-  const toastId = "tokenValidityToast";
-
-  //Hvis et token er gemt i session eller cookie, så gem alt dataen i AuthContext og log brugeren ind.
-  if (currentTime >= validUntil) {
-    //Hvis token er udløbet, så fjern det i storage/cookie, log brugeren ud og vis en fejl notifikation.
-    sessionStorage.removeItem("token");
-    setCookie("token", "", { days: 0 });
-    setAuth(null);
-    toast.error("Din session er udløbet. Log venligst ind igen.", {
+import checkTokenValidity from "./checkTokenValidity";
+export default function joinClass(id, weekday, setHasJoined, setUserJoinedDays, userJoinedDays, userAge, minAge, maxAge, auth, setAuth) {
+  checkTokenValidity(auth, setAuth);
+  if (!auth) {
+    toast.error("Du skal være logget ind for at kunne tilmelde dig", {
       position: "top-center",
       autoClose: 5000,
-      toastId: toastId,
     });
+    return;
   }
+
+  if (userJoinedDays.includes(weekday)) {
+    toast.error(`Du er allerede tilmeldt en aktivitet på ${weekday ? weekday : "denne dag"}`, {
+      position: "top-center",
+      autoClose: 5000,
+    });
+    return;
+  }
+  if (userAge < minAge || userAge > maxAge) {
+    toast.error(`Du er ikke i aldersgruppen for denne aktivitet`, {
+      position: "top-center",
+      autoClose: 5000,
+    });
+    return;
+  }
+
+  setHasJoined(true);
+  axios.post(`${import.meta.env.VITE_API_URI}/users/${auth?.userId}/activities/${id}`, {}, { headers: { Authorization: `Bearer ${auth?.token}`, "Content-Type": "application/json" } });
+  setUserJoinedDays([...userJoinedDays, weekday]);
+
+  toast.success("Du er nu tilmeldt denne aktivitet", {
+    position: "top-center",
+  });
   return;
 }
 ```
@@ -199,7 +212,7 @@ export default function checkTokenValidity(auth, setAuth) {
 
 ### **A - Automatiseret deployment**
 
-Jeg har deployet min applikation til Vercel da jeg synes det er en rigtig god platform som jeg har deployed på mange gange før. Jeg har valgt at bruge Vercel frem for Netlify da jeg synes det er nemmere at sætte op og bruge.
+Jeg har deployet min applikation til Vercel da jeg synes det er en rigtig god platform som jeg har brugt til deployment mange gange før. Jeg har valgt at bruge Vercel frem for Netlify da jeg synes det er nemmere at sætte op og bruge.
 
 ### **C - Cookies**
 
@@ -219,9 +232,9 @@ Jeg har lavet et [GitHub Projects board](https://github.com/orgs/rts-cmk-wu07/pr
 
 ## Perspektivering
 
-Hvis jeg skulle skalere dette projekt ville jeg starte med at lave en opret bruger formular da det er essentielt for siden og firmaet, at kunder kan oprette deres egen bruger og tilmelde sig danse aktiviteter. Dette var også en stor grund i mit valg om at bruge Yup, da det er meget genbrugeligt og man ville kunne bruge det samme skema til at lave en opret bruger formular.
+Hvis jeg skulle skalere dette projekt ville jeg starte med at lave en opret bruger formular da det er essentielt for siden og firmaet, at kunder kan oprette deres egen bruger og tilmelde sig danse aktiviteter. Dette var også en stor grund i mit valg om at bruge Yup, da det er meget genbrugeligt og man ville kunne bruge det samme skema til at lave en opret bruger formular. Jeg ville også lave en "glemt password" formular som sender en email til brugeren med et link til at nulstille deres password hvis de har glemt det og en "opret aktivitet" formular som ville gøre det muligt for instruktørere at oprette nye aktiviteter. Til sidst ville jeg tilføje noget information om firmaet og instruktørerne på siden i form af en "om os" side med billeder og kontakt information om firmaet og instruktørerne.
 
-Hvis jeg skulle forbedre applikationen ville jeg ændre et par ting i backenden som billedestørrelse og token længde for bedre hastigheder da det er ekstremt vigtigt at folk ikke skal vente for længe på siden da folk tit går væk fra siden hvis den er for lang tid om at loade.
+Hvis jeg skulle forbedre applikationen ville jeg ændre et par ting i API'et som billedestørrelse og token længde for hurtigere performance da det er ekstremt vigtigt at folk ikke skal vente for længe på siden da folk tit går væk fra siden hvis den er for lang tid om at loade.
 
 # Tech Stack
 

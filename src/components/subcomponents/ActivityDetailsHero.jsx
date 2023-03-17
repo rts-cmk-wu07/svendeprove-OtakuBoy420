@@ -39,8 +39,8 @@ export default function ActivityDetailsHero({ data, userData, auth, setAuth }) {
             animated
             onClick={() => {
               if (hasJoined) {
-                leaveClass(data?.id, data?.weekday, setHasJoined, setUserJoinedDays, userJoinedDays, auth, setAuth);
-              } else joinClass(data?.id, data?.weekday, setHasJoined, setUserJoinedDays, userJoinedDays, userAge, data?.minAge, data?.maxAge, auth, setAuth);
+                leaveClass(data, setHasJoined, setUserJoinedDays, userJoinedDays, auth, setAuth);
+              } else joinClass(data, setHasJoined, setUserJoinedDays, userJoinedDays, userAge, auth, setAuth);
             }}
             className="absolute bottom-6 right-6">
             {hasJoined ? "Forlad" : "Tilmeld"}

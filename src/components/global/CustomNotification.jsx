@@ -5,16 +5,17 @@ export default function CustomToastContainer() {
   return (
     <ToastContainer
       position="top-center"
-      autoClose={1500}
+      autoClose={5000}
       toastStyle={{
         background: "#fff",
         color: "black",
-        fontSize: "0.75rem",
+        fontSize: "16px",
         fontWeight: "500",
         borderRadius: "15px",
         paddingInline: "1rem",
         margin: "0.5rem",
         letterSpacing: "0rem",
+        userSelect: "none",
       }}
       hideProgressBar={false}
       newestOnTop
