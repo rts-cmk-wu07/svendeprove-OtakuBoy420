@@ -8,7 +8,7 @@ Uddannelse: Webudvikler
 
 ## Beskrivelse
 
-Velkommen til min eksamensopgave, Landrup Dans! I dette repository har jeg lavet min eksamensopgave som bruger [Landrup Dans API'et](https://github.com/OtakuBoy420/landrup-dans-api), læs videre for at lære mere om hvordan man starter projektet, min tilgang og hvordan jeg har overvejet mine valg :)
+Velkommen til min svendeprøve, Landrup Dans. I dette repository har jeg lavet min svendeprøve som bruger [Landrup Dans API'et](https://github.com/OtakuBoy420/landrup-dans-api), læs videre for at lære mere om hvordan man kører projektet, min tilgang og hvordan jeg har overvejet mine valg :)
 
 ## List of contents
 
@@ -16,36 +16,36 @@ Velkommen til min eksamensopgave, Landrup Dans! I dette repository har jeg lavet
   - [Beskrivelse](#beskrivelse)
   - [List of contents](#list-of-contents)
   - [.env fil](#env-fil)
-  - [Start projektet](#start-projektet)
+  - [Kør projektet](#kør-projektet)
 - [Projekt tilgang](#projekt-tilgang)
-  - [Project Board](#project-board)
-  - [Prioritering](#prioritering)
+  - [Prioritering og organisering](#prioritering-og-organisering)
   - [Perspektivering](#perspektivering)
-- [Design Ændringer](#design--ndringer)
-  - [Navigations menu](#--navigations-menu--)
-  - [Input felter](#--input-felter--)
-  - [Hold roster side](#--hold-roster-side--)
-  - [Kalender side](#--kalender-side--)
+- [Design Ændringer](#design-ændringer)
+  - [Navigations menu](#navigations-menu)
+  - [Welcome side](#welcome-side)
+  - [Input felter](#input-felter)
+  - [Hold roster side](#hold-roster-side)
+  - [Kalender side](#kalender-side)
 - [Valgfrie opgaver](#valgfrie-opgaver)
-  - [A - Automatiseret Deployment](#--a---automatiseret-deployment--)
-  - [B - Responsive Design](#--b---responsive-design--)
-  - [C - Cookies](#--c---cookies--)
+  - [A - Automatiseret Deployment](#a---automatiseret-deployment)
+  - [B - Responsive Design](#b---responsive-design)
+  - [C - Cookies](#c---cookies)
 - [Kode Eksempler](#kode-eksempler)
   - [Skriftligt Eksempel - useAxios hook](#skriftligt-eksempel---useaxios-hook)
   - [Mundtligt Eksempel - joinActivity funktion](#mundtligt-eksempel---joinactivity-funktion)
 - [Tech Stack](#tech-stack)
   - [Build Tool](#build-tool)
-    - [Vite](#--vite--)
+    - [Vite](#vite)
   - [Frameworks](#frameworks)
-    - [React.js](#--reactjs--)
-    - [TailwindCSS](#--tailwindcss--)
+    - [React.js](#reactjs)
+    - [TailwindCSS](#tailwindcss)
   - [Libraries](#libraries)
-    - [Framer-motion](#--framer-motion--)
-    - [React-router](#--react-router--)
-    - [Axios](#--axios--)
-    - [React-Toastify](#--react-toastify--)
-    - [Lucide-react](#--lucide-react--)
-    - [Yup](#--yup--)
+    - [Framer-motion](#framer-motion)
+    - [React-router](#react-router)
+    - [Axios](#axios)
+    - [React-Toastify](#react-toastify)
+    - [Lucide-react](#lucide-react)
+    - [Yup](#yup)
 
 ## .env fil
 
@@ -54,7 +54,7 @@ VITE_API_URI=http://localhost:4000/api/v1
 VITE_AUTH_URI=http://localhost:4000/auth/token
 ```
 
-## Start projektet
+## Kør projektet
 
 1. Klon projektet ned på din maskine.
 2. Tilføj .env filen som står ovenover i dokumentation til rooten af projektet.
@@ -66,29 +66,35 @@ VITE_AUTH_URI=http://localhost:4000/auth/token
 npm run dev
 ```
 
-6. Til sidst hvis Vite ikke allerede har gjordt det for dig, åben http://localhost:5173 i browseren, og så er vi i gang! :)
+6. Til sidst hvis Vite ikke allerede har gjordt det for dig, åben http://localhost:5173 i browseren, og så er vi i gang! :
+
+<br />
 
 # Projekt tilgang
 
 ## Prioritering og organisering
 
-Jeg har lavet et [GitHub Projects board](https://github.com/orgs/rts-cmk-wu07/projects/17/views/1) med issues og labels der indikerer om jeg synes issuet er en MVP, Nice to have eller Need to have. Min tankegang da jeg satte mit board op var "hvad skal man minimum have på siden for at brugeren kan bruge alt funktionaliteten?" Så det var derfor at jeg satte activities page, activity list, activity details, log in og useAxios hook alle som mit minimal viable product (MVP). Derefter som need to have tilføjede jeg issues som ville gøre oplevelsen for brugeren meget bedre og gøre det nemmere at navigere rundt. Nice to have var ting som jeg ikke behøvede at tilføje men som jeg synes er rigtig rare at have når man skal bruge en hjemmeside og som bare gør hele brugeroplevelsen mere lækker og flydende. Jeg synes det er rigtig rart at have et project board til sit projekt fordi det gør det meget nemmere at få overblik over hvor henne man er og hvad der mangler.
+Jeg har lavet et [GitHub Projects board](https://github.com/orgs/rts-cmk-wu07/projects/17/views/1) med issues og labels der indikerer om jeg synes issuet er en MVP, Need to have eller Nice to have. Min tankegang da jeg satte mit board op var "hvad skal man minimum have på siden for at brugeren kan bruge alt funktionaliteten?" Så det var derfor at jeg satte activities page, activity list, activity details, log in og useAxios hook som mine minimal viable product (MVP) issues. Derefter som need to have tilføjede jeg issues som gør oplevelsen for brugeren meget bedre og gøre det nemmere at navigere rundt. Nice to have var ting som jeg ikke behøvede at tilføje men som jeg synes selv er rigtig rare at have når man skal bruge en hjemmeside og som bare gør hele brugeroplevelsen mere lækker og flydende. Jeg synes det er rigtig vigtigt at have et project board til sit projekt fordi det gør det meget nemmere at få overblik over hvor henne man er og hvad der mangler.
 
 ## Perspektivering
 
-Hvis jeg skulle skalere applikationen ville jeg starte med at lave en opret bruger formular da det er essentielt for danseskolen at kunder kan oprette deres egen bruger og tilmelde sig aktiviteter. Dette var også en stor grund i mit valg om at bruge Yup, da det er meget genbrugeligt og man ville kunne genbruge mit skema til at lave en opret bruger formular. Jeg ville også lave en "glemt password" formular som sender en email til brugeren med et link til at nulstille deres password hvis de har glemt det og en "opret aktivitet" formular som ville gøre det muligt for instruktørere at oprette nye aktiviteter. Til sidst ville jeg tilføje noget information om firmaet og instruktørerne på siden i form af en "om os" side eller i en footer, med billeder og kontakt information om firmaet og instruktørerne.
+Hvis jeg skulle skalere applikationen ville jeg starte med at lave en opret bruger formular da det er essentielt for danseskolen at kunder kan oprette deres egen bruger og tilmelde sig aktiviteter. Dette var også en stor grund i mit valg om at bruge Yup, da det er meget genbrugeligt og man ville kunne genbruge mit skema i en opret bruger formular. Jeg ville også lave en "glemt password" formular som sender en email til brugeren med et link til at nulstille deres password hvis de har glemt det og en "opret aktivitet" formular som ville gøre det muligt for instruktørere at oprette nye aktiviteter. Til sidst ville jeg tilføje noget information om firmaet og instruktørerne på siden i form af en "om os" side eller i en footer, med billeder og kontakt-information om firmaet og instruktørerne.
 
-Hvis jeg skulle forbedre applikationen ville jeg ændre et par ting i API'et som billedestørrelse og token længde for hurtigere performance da det er ekstremt vigtigt at folk ikke skal vente for længe på at indlæse siden da folk tit vil lukke siden ned hvis den er for lang tid om at loade. Jeg ville også ændre i API'et så det vil give nogen bedre og mere beskrivende fejlbeskeder så brugeren kan forstå hvad der er galt og hvad de potentielt kan gøre for at løse problemet.
+Hvis jeg skulle forbedre applikationen ville jeg ændre et par ting i API'et som billedestørrelse og token længde for hurtigere performance da det er ekstremt vigtigt at brugeren ikke skal vente for længe på at indlæse siden da brugeren tit vil lukke en side ned hvis den er for lang tid om at loade. Jeg ville også ændre i API'et så det vil give nogen bedre og mere beskrivende fejlbeskeder så brugeren kan forstå hvad der er galt og hvad de potentielt kan gøre for at løse problemet.
 
 # Design Ændringer
 
 ## **Navigations menu**
 
-Jeg har valgt at lave en ekstra knap i navigations menuen som viser et Login-formular modal pop-up vindue når man trykker på den. Da jeg gjorde mig overvejlser over hvordan man skulle logge ind og ud af applikationen tænkte jeg at det ville være mest brugervenligt at der var en knap til det som man altid kunne trykke på for at åbne formularen, og siden der var massere af plads i navigations menuen til en ekstra knap så valgte jeg at gøre det på den måde.
+Jeg har valgt at lave en ekstra knap i navigations menuen som viser et Login-formular modal pop-up vindue når man trykker på den. Da jeg gjorde mig overvejlser over hvordan man skulle logge ind og ud af applikationen tænkte jeg at det ville være mest brugervenligt og let tilgængeligt at der var en knap til det som man altid kunne trykke på for at åbne formularen, og siden der var massere af plads i navigations menuen til en ekstra knap så valgte jeg at gøre det på den måde.
+
+## **Welcome side**
+
+Jeg har sat lidt blur ind på baggrunden hvor teksten er så den er mere tydelig at læse.
 
 ## **Input felter**
 
-Jeg har valgt at give input felterne på siden afrundede hjørner så de passer bedre ind i det generelle udtryk af siden, nu hvor næsten alt andet er afrundet og brugeren skal have et indtryk at der er en sammenhæng mellem alle elementerne på siden.
+Jeg har valgt at give input felterne på siden afrundede hjørner så de passer bedre ind i det generelle udtryk af siden siden næsten alt andet er afrundet og brugeren gerne skal få et indtryk at der er en sammenhæng mellem alle elementerne på siden.
 
 ## **Hold roster side**
 
@@ -102,15 +108,15 @@ På kalender-siden har jeg gjort titlen på ens aktiviter mindre så man kan se 
 
 ### **A - Automatiseret Deployment**
 
-Jeg har deployet min applikation til Vercel da jeg synes det er en rigtig god platform som jeg har brugt til deployment mange gange før. Jeg har valgt at bruge Vercel frem for Netlify da jeg synes det er nemmere at sætte op og bruge.
+Jeg har deployet min applikation til Vercel da jeg synes det er en rigtig god platform som jeg har brugt til deployment mange gange før. Jeg har valgt at bruge Vercel frem for Netlify da jeg synes det er nemmere at sætte op og giver bedre feedback når der er fejl.
 
 ### **B - Responsive Design**
 
-Jeg har gjordt min applikation responsiv ved at bruge tailwind's breakpoints, det vil sige at min applikation er responsiv på alle skærmstørrelser. Jeg har hold mig så godt som muligt til de design-valg der allerede er foretaget i det udleverede design, men har nogle gange ændre lidt ting for at det også er brugervenligt på større skærme.
+Jeg har gjordt min applikation responsiv ved at bruge tailwind breakpoints, det vil sige at min applikation er responsiv på alle skærmstørrelser. Jeg har hold mig så godt som muligt til de design-valg der allerede er foretaget i det udleverede design, men har nogle gange ændret lidt ting for at det også er brugervenligt på større skærme.
 
 ### **C - Cookies**
 
-Jeg har lavet en "husk mig" checkbox i login formularen som bruger React-use-cookie biblioteket til at sætte en cookie om man vil blive husket næste gang man går ind på siden.
+Jeg har lavet en "husk mig" checkbox i login formularen som bruger React-use-cookie biblioteket til at sætte en cookie om man vil blive husket næste gang man går ind på siden, derefter hver gang man åbner siden vil den tjekke om der er en cookie og hvis der er en cookie vil den automatisk logge brugeren ind.
 
 # Kode Eksempler
 
@@ -202,7 +208,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import checkTokenValidity from "./checkTokenValidity";
 
-export default function joinActivity(data, setHasJoined, setUserJoinedDays, userJoinedDays, setUserJoinedActivities, userAge, auth, setAuth) {
+export default function joinActivity(data, setHasJoined, setUserJoinedDays, userJoinedDays, userAge, auth, setAuth) {
   // Kører min checkTokenValidity funktion som fungerer som en slags middleware der tjekker om ens token er udløbet og hvis det er det, så bliver logger brugeren ud og viser en notifikation.
   checkTokenValidity(auth, setAuth);
 
@@ -243,9 +249,6 @@ export default function joinActivity(data, setHasJoined, setUserJoinedDays, user
   // Opdaterer userJoinedDays statet med den nye ugedag, så brugeren ikke kan tilmelde sig aktiviteten igen
   setUserJoinedDays([...userJoinedDays, data?.weekday]);
 
-  // Opdaterer userJoinedActivities statet med den nye aktivitet, så brugeren ikke kan tilmelde sig aktiviteten igen
-  setUserJoinedActivities((prevState) => [...prevState, data?.id]);
-
   // Opdaterer hasJoined statet til true, så brugeren ikke kan tilmelde sig aktiviteten igen
   setHasJoined(true);
 
@@ -275,7 +278,7 @@ Vite tilbyder en hurtigere developer experience med sin lynhurtige build time og
 
 ### **React.js**
 
-For mig var der to framework muligheder til dette projekt, enten at skrive i frameworket **Next.js** eller **React.js**. Jeg valgte at bruge React da det er det framework som jeg har mest erfaring med og fordi da jeg gjorde mig overvejelser om projektbeskrivelsen og kravene, tænkte jeg at jeg højest sandsynligt ikke ville gøre brug af Next's ekstra funktionaliteter alligevel (så som Server Side Rendering og SEO) så React er det perfekte valg for mig.
+For mig var der to javascript framework muligheder til dette projekt, enten **Next.js** eller **React.js**. Jeg valgte at bruge React da det er det framework som jeg har mest erfaring med og fordi da jeg gjorde mig overvejelser om projektbeskrivelsen og kravene, tænkte jeg at jeg højest sandsynligt ikke ville gøre brug af Next's ekstra funktionaliteter alligevel (så som Server Side Rendering og SEO), så det var derfor jeg valgt react frem for next.
 
 React stiller en masse forskellige ting til rådighed som for eksempel et stort community som gør det rigtig nemt at finde problemløsninger, stort udvalg af npm pakker, og det er rigtig nemt at genanvende forskellige komponenter så jeg slipper for at gentage kode jeg allerede har skrevet.
 

@@ -52,7 +52,7 @@ export default function LoginForm() {
   }
   return (
     <form onSubmit={handleSubmit(onSubmit, showToastError)} className="flex flex-col space-y-8 text-base leading-6 text-gray-700 lg:relative lg:rounded-xl lg:bg-black lg:px-4 lg:py-8">
-      <h1 className="text-shadow mb-4 text-2xl text-dimWhite">{auth ? "Log ud" : "Log ind"}</h1>
+      <h1 className="text-shadow text-2xl text-dimWhite">{auth ? "Log ud" : "Log ind"}</h1>
       <div className="absolute -top-4 right-4 z-50 hidden cursor-pointer text-white lg:block" onClick={() => setLoginModal(false)}>
         <X size={42} />
       </div>

@@ -24,7 +24,7 @@ export default function ActivityDetailsPage() {
   return (
     <AnimatePresence>
       <SEO title={data?.name ? `Landrup Dans - ${data?.name}` : "Landrup Dans - Aktivitet"} />
-      <motion.section initial="hidden" animate="show" className="mx-auto max-w-6xl lg:flex lg:flex-col lg:items-center lg:justify-center">
+      <motion.section key="detailspage" initial="hidden" animate="show" className="mx-auto max-w-6xl lg:flex lg:flex-col lg:items-center lg:justify-center">
         {loading && userLoading ? (
           <article className="flex h-screen w-screen items-center justify-center ">
             <Loader size="lg" />

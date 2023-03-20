@@ -32,7 +32,7 @@ export default function CalendarPage() {
   return (
     <AnimatePresence>
       <SEO title="Landrup Dans - Kalender" />
-      <motion.section initial="hidden" animate="show" className="mx-auto max-w-6xl p-6">
+      <motion.section key="calendarpage" initial="hidden" animate="show" className="mx-auto max-w-6xl p-6">
         <h1 className="mb-8 text-xl lg:mt-14 lg:text-center">Kalender</h1>
         {userLoading ? (
           <Loader size="lg" />

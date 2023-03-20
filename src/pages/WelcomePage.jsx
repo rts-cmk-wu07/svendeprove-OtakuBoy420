@@ -14,6 +14,7 @@ export default function WelcomePage({ setHasSeenWelcome }) {
     <AnimatePresence>
       <SEO title="Landrup Dans - Velkommen" />
       <motion.section
+        key="welcomepage"
         initial="hidden"
         animate="show"
         variants={{
