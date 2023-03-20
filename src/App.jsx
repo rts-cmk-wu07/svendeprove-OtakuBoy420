@@ -16,6 +16,7 @@ import { useState } from "react";
 import LoginModal from "./components/global/LoginModal";
 import { useEffect } from "react";
 import { getCookie } from "react-use-cookie";
+import { HelmetProvider } from "react-helmet-async";
 export default function App() {
   const location = useLocation();
   const [loginModal, setLoginModal] = useState(false);
@@ -24,6 +25,7 @@ export default function App() {
   const storedToken = sessionStorage.getItem("token");
   const [hasSeenWelcome, setHasSeenWelcome] = useState(false);
   const hasSeenWelcomeStorage = sessionStorage.getItem("hasSeenWelcome");
+  const helmetContext = {};
   useEffect(() => {
     loginModal && setLoginModal(false);
   }, [location]);
@@ -44,27 +46,29 @@ export default function App() {
     return true;
   }
   return (
-    <LoginModalContext.Provider value={{ loginModal, setLoginModal }}>
-      <AuthContext.Provider value={{ auth, setAuth }}>
-        <CustomToastContainer />
-        <LoginModal loginModal={loginModal} setLoginModal={setLoginModal} />
-        <AnimatePresence mode="wait" initial={false}>
-          <Routes location={location} key={location.pathname}>
-            {accessContent() ? (
-              <Route path="*" element={<WelcomePage setHasSeenWelcome={setHasSeenWelcome} />} />
-            ) : (
-              <Route path="/" element={<Layout />}>
-                <Route index element={<ActivitiesPage />} />
-                <Route path="/activity/:id" element={<ActivityDetailsPage />} />
-                <Route path="/calendar" element={<CalendarPage />} />
-                <Route path="/roster/:id" element={auth?.role === "instructor" ? <RosterPage /> : <h1 className="p-6 text-xl">Du har ikke adgang til denne side.</h1>} />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Route>
-            )}
-          </Routes>
-        </AnimatePresence>
-      </AuthContext.Provider>
-    </LoginModalContext.Provider>
+    <HelmetProvider context={helmetContext}>
+      <LoginModalContext.Provider value={{ loginModal, setLoginModal }}>
+        <AuthContext.Provider value={{ auth, setAuth }}>
+          <CustomToastContainer />
+          <LoginModal loginModal={loginModal} setLoginModal={setLoginModal} />
+          <AnimatePresence mode="wait" initial={false}>
+            <Routes location={location} key={location.pathname}>
+              {accessContent() ? (
+                <Route path="*" element={<WelcomePage setHasSeenWelcome={setHasSeenWelcome} />} />
+              ) : (
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<ActivitiesPage />} />
+                  <Route path="/activity/:id" element={<ActivityDetailsPage />} />
+                  <Route path="/calendar" element={<CalendarPage />} />
+                  <Route path="/roster/:id" element={auth?.role === "instructor" ? <RosterPage /> : <h1 className="p-6 text-xl">Du har ikke adgang til denne side.</h1>} />
+                  <Route path="/search" element={<SearchPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Route>
+              )}
+            </Routes>
+          </AnimatePresence>
+        </AuthContext.Provider>
+      </LoginModalContext.Provider>
+    </HelmetProvider>
   );
 }

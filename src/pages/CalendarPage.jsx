@@ -9,6 +9,7 @@ import LoginModalContext from "../contexts/LoginModalContext";
 import { toast } from "react-toastify";
 import { fadeUp } from "../utils/motion";
 import { AlertCircle } from "lucide-react";
+import SEO from "../components/global/SEO";
 export default function CalendarPage() {
   const { auth } = useContext(AuthContext);
   const { setLoginModal } = useContext(LoginModalContext);
@@ -30,6 +31,7 @@ export default function CalendarPage() {
   }, []);
   return (
     <AnimatePresence>
+      <SEO title="Landrup Dans - Kalender" />
       <motion.section initial="hidden" animate="show" className="mx-auto max-w-6xl p-6">
         <h1 className="mb-8 text-xl lg:mt-14 lg:text-center">Kalender</h1>
         {userLoading ? (

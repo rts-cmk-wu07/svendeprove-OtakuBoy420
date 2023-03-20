@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import SEO from "../components/global/SEO";
 import Button from "../components/subcomponents/Button";
 import { fadeIn } from "../utils/motion";
 export default function WelcomePage({ setHasSeenWelcome }) {
@@ -11,6 +12,7 @@ export default function WelcomePage({ setHasSeenWelcome }) {
   }
   return (
     <AnimatePresence>
+      <SEO title="Landrup Dans - Velkommen" />
       <motion.section
         initial="hidden"
         animate="show"
