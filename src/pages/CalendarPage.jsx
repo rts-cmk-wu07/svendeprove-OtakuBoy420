@@ -7,6 +7,8 @@ import CalendarUserList from "../components/lists/CalendarUserList";
 import CalendarInstructorList from "../components/lists/CalendarInstructorList";
 import LoginModalContext from "../contexts/LoginModalContext";
 import { toast } from "react-toastify";
+import { fadeUp } from "../utils/motion";
+import { AlertCircle } from "lucide-react";
 export default function CalendarPage() {
   const { auth } = useContext(AuthContext);
   const { setLoginModal } = useContext(LoginModalContext);
@@ -28,15 +30,21 @@ export default function CalendarPage() {
   }, []);
   return (
     <AnimatePresence>
-      <motion.section initial="hidden" animate="show" className="p-6">
+      <motion.section initial="hidden" animate="show" className="mx-auto max-w-6xl p-6">
+        <h1 className="mb-8 text-xl lg:mt-14 lg:text-center">Kalender</h1>
         {userLoading ? (
           <Loader size="lg" />
         ) : (
           <>
-            <h1 className="mb-8 text-xl">Kalender</h1>
+            {userError && (
+              <motion.div initial="hidden" animate="show" variants={fadeUp(0)} className="flex flex-col items-center gap-2 text-lg">
+                <AlertCircle size={38} />
+                <p>{userError ? userError.message : "Der skete en fejl på vores server. Prøv igen senere."}</p>
+              </motion.div>
+            )}
             {auth?.role === "default" && <CalendarUserList userActivities={userData?.activities} />}
             {auth?.role === "instructor" && <CalendarInstructorList instructorId={userData?.id} />}
-            {!auth && (
+            {!auth && !userError && (
               <div className="flex h-full flex-col items-center justify-center gap-6">
                 <h1 className="text-lg">Du skal være logget ind for at se kalenderen</h1>
                 <button className="rounded-full border border-black bg-secondary/25 py-1.5 px-6" onClick={() => setLoginModal(true)}>

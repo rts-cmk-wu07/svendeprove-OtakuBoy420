@@ -55,20 +55,5 @@ export default function useAxios(url, { needsAuth = false, token = "", needsId =
       });
   }, [url, needsAuth, token, id]);
 
-  const refreshData = () => {
-    setLoading(true);
-    setError(null);
-
-    axios.get(url).then((response) => {
-      if (response.status >= 200 && response.status < 300) {
-        setData(response.data);
-        setLoading(false);
-      } else {
-        setError(new Error(`Data fejl: ${response.status}`));
-        setLoading(false);
-      }
-    });
-  };
-
-  return { data, error, loading, refreshData };
+  return { data, error, loading };
 }

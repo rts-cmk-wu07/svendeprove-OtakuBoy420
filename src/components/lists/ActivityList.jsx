@@ -10,13 +10,13 @@ export default function ActivityList({ search, searchable }) {
   const filteredActivities = !loading && !error && searchable ? data?.filter((activity) => activity?.name?.toLowerCase().includes(search?.toLowerCase())) : [];
   return (
     <AnimatePresence>
-      <div className="flex w-full flex-col items-center gap-8">
+      <div className="flex w-full flex-wrap items-center justify-center gap-8">
         {loading ? (
           <Loader size="lg" />
         ) : error ? (
           <motion.div initial="hidden" animate="show" variants={fadeUp(0)} className="flex flex-col items-center gap-2 text-lg">
             <AlertCircle size={38} />
-            <p>{error ? error.message : "Der skete en fejl. Prøv igen senere."}</p>
+            <p>{error ? error.message : "Der skete en fejl på vores server. Prøv igen senere."}</p>
           </motion.div>
         ) : searchable ? (
           search === "" ? (

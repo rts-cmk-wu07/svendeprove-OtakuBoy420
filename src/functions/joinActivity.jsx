@@ -2,9 +2,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import checkTokenValidity from "./checkTokenValidity";
 
-export default function joinClass(data, setHasJoined, setUserJoinedDays, userJoinedDays, userAge, auth, setAuth) {
+export default function joinActivity(data, setHasJoined, setUserJoinedDays, userJoinedDays, userAge, auth, setAuth) {
   // Kører min checkTokenValidity funktion som fungerer som en slags middleware der tjekker om ens token er udløbet og hvis det er det, så bliver logger brugeren ud og viser en notifikation.
   checkTokenValidity(auth, setAuth);
+
+  //GUARD CLAUSES
 
   // Hvis brugeren ikke er logget ind, vises en fejlmeddelelse og funktionen afbrydes
   if (!auth) {
@@ -49,7 +51,7 @@ export default function joinClass(data, setHasJoined, setUserJoinedDays, userJoi
     <div>
       Du er nu tilmeldt {data?.name}. <br />
       Vær klar på {data?.weekday.charAt(0).toUpperCase()}
-      {data?.weekday.slice(1)} kl. {data?.time}!
+      {data?.weekday.slice(1)} kl.{data?.time}!
     </div>,
     {
       autoClose: 5000,

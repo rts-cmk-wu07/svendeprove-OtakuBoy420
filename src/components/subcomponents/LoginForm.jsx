@@ -10,6 +10,7 @@ import Loader from "../global/Loader";
 import { setCookie } from "react-use-cookie";
 import { AnimatePresence, motion } from "framer-motion";
 import * as Yup from "yup";
+import { X } from "lucide-react";
 
 const schema = Yup.object().shape({
   username: Yup.string().required("Du skal skrive et brugernavn og adgangskode"),
@@ -43,16 +44,19 @@ export default function LoginForm() {
     setAuth(null);
     setCookie("token", "", { days: 0 });
     sessionStorage.removeItem("token");
-    toast.success("Du er blevet logget ud", {
+    toast.success("Du har logget ud", {
       autoClose: 1500,
       position: "top-center",
       className: "toast-top-message",
     });
   }
   return (
-    <form onSubmit={handleSubmit(onSubmit, showToastError)} className="flex flex-col space-y-8 text-base leading-6 text-gray-700 sm:text-lg sm:leading-7">
+    <form onSubmit={handleSubmit(onSubmit, showToastError)} className="flex flex-col space-y-8 text-base leading-6 text-gray-700 lg:relative lg:rounded-xl lg:bg-black lg:px-4 lg:py-8">
+      <h1 className="text-shadow mb-4 text-2xl text-dimWhite">{auth ? "Log ud" : "Log ind"}</h1>
+      <div className="absolute -top-4 right-4 z-50 hidden cursor-pointer text-white lg:block" onClick={() => setLoginModal(false)}>
+        <X size={42} />
+      </div>
       {!auth && (
-        // DESIGN ÆNDRING
         <>
           <div className="relative">
             <input
@@ -61,7 +65,7 @@ export default function LoginForm() {
               {...register("username")}
               type="text"
               placeholder="Brugernavn"
-              className="peer w-full rounded-xl bg-dimWhite py-2 pl-4 text-black placeholder-transparent shadow-lg focus:outline-none"
+              className="peer w-full rounded-full bg-dimWhite py-2 pl-4 text-black placeholder-transparent shadow-lg focus:outline-none"
             />
             <label
               htmlFor="username"
@@ -77,7 +81,7 @@ export default function LoginForm() {
               {...register("password")}
               type="password"
               placeholder="password"
-              className="peer w-full rounded-xl bg-dimWhite py-2 pl-4 text-black placeholder-transparent shadow-lg focus:outline-none"
+              className="peer w-full rounded-full bg-dimWhite py-2 pl-4 text-black placeholder-transparent shadow-lg focus:outline-none"
             />
             <label
               htmlFor="password"
@@ -85,7 +89,7 @@ export default function LoginForm() {
               Adgangskode
             </label>
           </div>
-          <label className="mx-auto flex items-center justify-center text-white" htmlFor="remember">
+          <label className="mx-auto flex select-none items-center justify-center text-white" htmlFor="remember">
             <input className="mr-2 h-5 w-5" type="checkbox" {...register("remember")} id="remember" name="remember" />
             <span className="text-shadow text-lg">Husk mig</span>
           </label>

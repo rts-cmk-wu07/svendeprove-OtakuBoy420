@@ -25,6 +25,9 @@ export default function App() {
   const [hasSeenWelcome, setHasSeenWelcome] = useState(false);
   const hasSeenWelcomeStorage = sessionStorage.getItem("hasSeenWelcome");
   useEffect(() => {
+    loginModal && setLoginModal(false);
+  }, [location]);
+  useEffect(() => {
     if (!auth) {
       if (tokenCookie) {
         setAuth(JSON.parse(tokenCookie));

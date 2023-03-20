@@ -3,6 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap");
 @import url("./styles/text-shadow.css");
 @import url("./styles/welcome-text.css");
+@import url("./styles/toastify.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -15,7 +15,7 @@ export default function ActivityCard({ activity, index }) {
         y: 0,
         transition: {
           duration: 0.5,
-          delay: index * 0.25,
+          delay: index * 0.1,
           ease: "easeOut",
         },
       }}
@@ -29,16 +29,15 @@ export default function ActivityCard({ activity, index }) {
       }}
       layout
       key={activity?.id}
-      className="relative flex aspect-square w-full cursor-pointer flex-col rounded-[39px] rounded-br-none">
+      className="relative flex aspect-square w-full cursor-pointer flex-col rounded-[39px] rounded-br-none sm:max-w-xs">
       <Link className="h-full w-full rounded-[39px] rounded-br-none" to={`/activity/${activity?.id}`}>
         {!imageLoaded && <ImagePlaceholder card size="full" />}
         <img
           onLoad={handleImageLoad}
-          className={imageLoaded ? "-z-1 absolute inset-0 h-full w-full rounded-[39px] rounded-br-none object-cover" : "hidden"}
+          className={imageLoaded ? "-z-1 absolute inset-0 h-full w-full rounded-[39px] rounded-br-none object-cover sm:max-w-xs" : "hidden"}
           src={activity?.asset.url}
           alt={activity?.name}
         />
-        <img />
         <div className="absolute bottom-0 flex h-[30%] w-full flex-col justify-center rounded-tr-[39px] rounded-bl-[39px] bg-secondary/80 px-6 text-black">
           <h2>{activity?.name}</h2>
           <p>
