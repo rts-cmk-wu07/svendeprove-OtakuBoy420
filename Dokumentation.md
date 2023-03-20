@@ -86,11 +86,11 @@ Hvis jeg skulle forbedre applikationen ville jeg ændre et par ting i API'et som
 
 ## **Navigations menu**
 
-Jeg har valgt at lave en ekstra knap i navigations menuen som viser et Login-formular modal pop-up vindue når man trykker på den. Da jeg gjorde mig overvejlser over hvordan man skulle logge ind og ud af applikationen tænkte jeg at det ville være mest brugervenligt og let tilgængeligt at der var en knap til det som man altid kunne trykke på for at åbne formularen, og siden der var massere af plads i navigations menuen til en ekstra knap så valgte jeg at gøre det på den måde.
+Jeg har valgt at lave en ekstra knap i navigations menuen som viser et Login-formular modal pop-up vindue når man trykker på den. Siden der er ikke er nogen log-ind knap i designet gjorde jeg mig mange overvejlser over hvordan man skulle logge ind og ud af applikationen, og jeg tænkte at det ville være mest brugervenligt at der var en knap til det som man altid kunne trykke på for at åbne formularen, og siden der var massere af plads i navigations menuen til en ekstra knap så valgte jeg at gøre det på den måde.
 
 ## **Welcome side**
 
-Jeg har sat lidt blur ind på baggrunden hvor teksten er så den er mere tydelig at læse.
+Jeg har sat lidt blur ind på baggrunden hvor teksten er så teksten er mere tydelig at læse.
 
 ## **Input felter**
 
@@ -108,7 +108,7 @@ På kalender-siden har jeg gjort titlen på ens aktiviter mindre så man kan se 
 
 ### **A - Automatiseret Deployment**
 
-Jeg har deployet min applikation til Vercel da jeg synes det er en rigtig god platform som jeg har brugt til deployment mange gange før. Jeg har valgt at bruge Vercel frem for Netlify da jeg synes det er nemmere at sætte op og giver bedre feedback når der er fejl.
+Jeg har deployet min applikation til Vercel på https://oliver-landrup-dans.vercel.app/. Jeg synes Vercel er en rigtig god platform som jeg har brugt til deployment mange gange før. Jeg har valgt at bruge Vercel frem for Netlify da jeg synes det er nemmere at sætte op og giver bedre feedback når der er fejl. Der bliver automatisk deployed når man comitter til GitHub og det er rigtgt nemt at sætte op.
 
 ### **B - Responsive Design**
 
