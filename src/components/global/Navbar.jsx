@@ -4,16 +4,18 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import LoginModalContext from "../../contexts/LoginModalContext";
 import { useLocation } from "react-router-dom";
+import AuthContext from "../../contexts/AuthContext";
 
 export default function Navbar() {
   const { loginModal, setLoginModal } = useContext(LoginModalContext);
+  const { auth } = useContext(AuthContext);
   const location = useLocation();
   const navigationLinks = [
-    { path: "/", icon: Home, name: "home" },
-    { path: "/search", icon: Search, name: "search" },
-    { path: "/calendar", icon: Calendar, name: "calendar" },
+    { path: "/", icon: Home, name: "hjem" },
+    { path: "/search", icon: Search, name: "søg" },
+    { path: "/calendar", icon: Calendar, name: "kalender" },
     {
-      name: "login",
+      name: "log ind",
       icon: User,
       onClick: () => {
         setLoginModal(!loginModal);
@@ -39,7 +41,7 @@ export default function Navbar() {
                 </motion.div>
               ) : null}
             </AnimatePresence>
-            {link.name === "login" ? (
+            {link.name === "log ind" ? (
               <button
                 onClick={link.onClick}
                 className={
@@ -48,7 +50,7 @@ export default function Navbar() {
                     : "my-2.5 flex cursor-pointer items-center justify-center rounded-full border-2 border-black p-1.5 lg:rounded-none lg:border-none lg:p-0"
                 }>
                 <link.icon className="z-10 lg:mr-2" size={24} />
-                <p className="hidden capitalize lg:block">{link.name}</p>
+                <p className="hidden capitalize lg:block">{!auth ? link.name : "Log ud"}</p>
               </button>
             ) : (
               <NavLink

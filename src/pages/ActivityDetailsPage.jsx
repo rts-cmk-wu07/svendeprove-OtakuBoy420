@@ -10,6 +10,7 @@ import { useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 import { fadeUp } from "../utils/motion";
 import { AlertCircle } from "lucide-react";
+import SEO from "../components/global/SEO";
 export default function ActivityDetailsPage() {
   const { id } = useParams();
   const { auth, setAuth } = useContext(AuthContext);
@@ -22,6 +23,7 @@ export default function ActivityDetailsPage() {
   });
   return (
     <AnimatePresence>
+      <SEO title={data?.name ? `Landrup Dans - ${data?.name}` : "Landrup Dans - Aktivitet"} />
       <motion.section initial="hidden" animate="show" className="mx-auto max-w-6xl lg:flex lg:flex-col lg:items-center lg:justify-center">
         {loading && userLoading ? (
           <article className="flex h-screen w-screen items-center justify-center ">
