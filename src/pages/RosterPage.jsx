@@ -16,11 +16,11 @@ export default function RosterPage() {
     id: id,
   });
   return (
-    <section className="p-6">
+    <section className="mx-auto max-w-6xl p-6">
       {loading ? (
         <Loader size="lg" />
       ) : (
-        <article>
+        <article className="lg:mt-14 lg:text-center">
           <h1 className="mb-8 truncate text-xl">{activityTitle ? activityTitle : data?.length > 0 ? data[0]?.activity : "Aktivitet"}</h1>
           {!data || error ? (
             <p className="text-lg">Der er sket en fejl, er du sikker du er på den rigtige side?</p>
