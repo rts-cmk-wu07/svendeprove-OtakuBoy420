@@ -14,6 +14,7 @@ export default function CalendarActivity({ activity, index }) {
           className="flex w-full flex-col rounded-[11px] px-6 py-4"
           to={auth.role === "default" ? `/activity/${activity?.id}` : auth.role === "instructor" ? `/roster/${activity?.id}?title=${activity?.name}` : "/activities"}>
           <h2 className="truncate text-lg leading-6">{activity?.name}</h2>
+
           <p className="capitalize">
             {activity?.weekday} {activity?.time}{" "}
           </p>
