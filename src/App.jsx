@@ -1,52 +1,53 @@
-import { Route, Routes } from "react-router";
-import Layout from "./Layout";
-import { useLocation } from "react-router";
-import NotFoundPage from "./pages/NotFoundPage";
-import { AnimatePresence, motion } from "framer-motion";
-import CustomToastContainer from "./components/global/CustomNotification";
-import ActivitiesPage from "./pages/ActivitiesPage";
-import ActivityDetailsPage from "./pages/ActivityDetailsPage";
-import CalendarPage from "./pages/CalendarPage";
-import SearchPage from "./pages/SearchPage";
-import RosterPage from "./pages/RosterPage";
-import WelcomePage from "./pages/WelcomePage";
-import LoginModalContext from "./contexts/LoginModalContext";
-import AuthContext from "./contexts/AuthContext";
-import { useState } from "react";
-import LoginModal from "./components/global/LoginModal";
-import { useEffect } from "react";
-import { getCookie } from "react-use-cookie";
-import { HelmetProvider } from "react-helmet-async";
+import { Route, Routes } from "react-router"
+import Layout from "./Layout"
+import { useLocation } from "react-router"
+import NotFoundPage from "./pages/NotFoundPage"
+import { AnimatePresence, motion } from "framer-motion"
+import CustomToastContainer from "./components/global/CustomNotification"
+import ActivitiesPage from "./pages/ActivitiesPage"
+import ActivityDetailsPage from "./pages/ActivityDetailsPage"
+import CalendarPage from "./pages/CalendarPage"
+import SearchPage from "./pages/SearchPage"
+import RosterPage from "./pages/RosterPage"
+import WelcomePage from "./pages/WelcomePage"
+import LoginModalContext from "./contexts/LoginModalContext"
+import AuthContext from "./contexts/AuthContext"
+import { useState } from "react"
+import LoginModal from "./components/global/LoginModal"
+import { useEffect } from "react"
+import { getCookie } from "react-use-cookie"
+import { HelmetProvider } from "react-helmet-async"
 export default function App() {
-  const location = useLocation();
-  const [loginModal, setLoginModal] = useState(false);
-  const [auth, setAuth] = useState(false);
-  const tokenCookie = getCookie("token");
-  const storedToken = sessionStorage.getItem("token");
-  const [hasSeenWelcome, setHasSeenWelcome] = useState(false);
-  const hasSeenWelcomeStorage = sessionStorage.getItem("hasSeenWelcome");
-  const helmetContext = {};
+  const location = useLocation()
+  const [loginModal, setLoginModal] = useState(false)
+  const [auth, setAuth] = useState(false)
+  const tokenCookie = getCookie("token")
+  const storedToken = sessionStorage.getItem("token")
+  const [hasSeenWelcome, setHasSeenWelcome] = useState(false)
+  const hasSeenWelcomeStorage = sessionStorage.getItem("hasSeenWelcome")
+  const helmetContext = {}
   useEffect(() => {
-    loginModal && setLoginModal(false);
-  }, [location]);
+    loginModal && setLoginModal(false)
+  }, [location])
   useEffect(() => {
     if (!auth) {
       if (tokenCookie) {
-        setAuth(JSON.parse(tokenCookie));
+        setAuth(JSON.parse(tokenCookie))
       } else if (storedToken) {
-        setAuth(JSON.parse(storedToken));
+        setAuth(JSON.parse(storedToken))
       }
     }
-    setHasSeenWelcome(hasSeenWelcomeStorage === "true" ? true : false);
-  }, []);
+    setHasSeenWelcome(hasSeenWelcomeStorage === "true" ? true : false)
+  }, [])
   function accessContent() {
     if (hasSeenWelcome || hasSeenWelcomeStorage || auth) {
-      return false;
+      return false
     }
-    return true;
+    return true
   }
   return (
     <HelmetProvider context={helmetContext}>
+      {/* kommentar */}
       <LoginModalContext.Provider value={{ loginModal, setLoginModal }}>
         <AuthContext.Provider value={{ auth, setAuth }}>
           <CustomToastContainer />
@@ -70,5 +71,5 @@ export default function App() {
         </AuthContext.Provider>
       </LoginModalContext.Provider>
     </HelmetProvider>
-  );
+  )
 }
